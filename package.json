@@ -13,7 +13,9 @@
     "optimize:images": "node scripts/optimize-images.js",
     "build": "npm run create-dist && npm run minify-css && npm run copy-files && npm run minify-js && npm run optimize:images",
     "deploy": "node scripts/deploy.js",
-    "serve": "npx http-server . -p 3000 -c-1"
+    "serve": "npx http-server . -p 3000 -c-1",
+    "serve:dist": "npx http-server dist -p 3000 -c-1",
+    "preview": "npm run build && npm run serve:dist"
   },
   "keywords": [
     "html",
