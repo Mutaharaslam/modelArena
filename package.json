@@ -1,0 +1,42 @@
+{
+  "name": "model-arena",
+  "version": "1.0.0",
+  "description": "ModelArena - Discover & Explore OnlyFans Models",
+  "main": "postcss.config.js",
+  "scripts": {
+    "watch": "npx tailwindcss -i ./src/input.css -o ./src/styles.css --watch",
+    "dev": "concurrently \"npm run watch\" \"browser-sync start --server . --files '**/*' --no-inject-changes\"",
+    "minify-css": "npx tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
+    "create-dist": "mkdir -p dist/js dist/assets",
+    "minify-js": "terser js/main.js -o dist/js/main.js --compress --mangle --comments false",
+    "copy-files": "cp index.html manifest.json sw.js dist/ && cp -r assets/* dist/assets/",
+    "optimize:images": "node scripts/optimize-images.js",
+    "build": "npm run create-dist && npm run minify-css && npm run copy-files && npm run minify-js && npm run optimize:images",
+    "deploy": "node scripts/deploy.js",
+    "serve": "npx http-server . -p 3000 -c-1"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "tailwindcss",
+    "responsive",
+    "website"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "browser-sync": "^3.0.4",
+    "concurrently": "^9.2.0",
+    "cssnano": "^7.1.1",
+    "http-server": "^14.1.1",
+    "imagemin": "^8.0.1",
+    "imagemin-webp": "^8.0.0",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.1.12",
+    "terser": "^5.43.1"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.12"
+  }
+}
