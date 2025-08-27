@@ -24,6 +24,8 @@
   --shadow-card-shadow-grey: 0px -4px 12px 0px #e0d2dd40;
   --shadow-card-shadow-grey-bottom: 0px 4px 12px 0px #e0d2dd40;
   --shadow-card-shadow-grey-card: 0px 4px 12px 0px #e0d2dd40;
+  --gradient-button-gradient: linear-gradient(135deg, #F093FB 0%, #F5576C 100%);
+
 }
 
 /* Custom checkbox styling to match Figma */
