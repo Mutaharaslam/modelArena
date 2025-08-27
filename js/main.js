@@ -14,6 +14,7 @@ class ModelArena {
 
   initializeComponents() {
     this.mobileMenu = new MobileMenu();
+    this.mobileSearch = new MobileSearch();
     this.searchForm = new SearchForm();
     this.favoriteButtons = new FavoriteButtons();
     this.imageLoader = new ImageLoader();
@@ -30,6 +31,7 @@ class ModelArena {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         this.mobileMenu.close();
+        this.mobileSearch.close();
       }
     });
 
@@ -158,6 +160,7 @@ class ModelArena {
     // Handle responsive behavior
     if (window.innerWidth >= 768) {
       this.mobileMenu.close();
+      this.mobileSearch.close();
     }
   }
 }
@@ -165,9 +168,9 @@ class ModelArena {
 // Mobile Menu Component
 class MobileMenu {
   constructor() {
-    this.menuToggle = document.querySelector('.header__menu-toggle');
-    this.mobileNav = document.querySelector('.mobile-nav');
-    this.header = document.querySelector('.header');
+    this.menuToggle = document.getElementById('mobile-menu-toggle');
+    this.mobileNav = document.getElementById('mobile-nav');
+    this.header = document.querySelector('header');
     this.isOpen = false;
     
     if (this.menuToggle) {
@@ -208,15 +211,86 @@ class MobileMenu {
   open() {
     this.isOpen = true;
     this.menuToggle.setAttribute('aria-expanded', 'true');
-    this.mobileNav?.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
+    this.mobileNav?.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+    this.mobileNav?.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
+    
+    // Close mobile search if open
+    const searchField = document.getElementById('mobile-search-field');
+    if (searchField && !searchField.classList.contains('hidden')) {
+      const mobileSearch = window.modelArena?.mobileSearch;
+      if (mobileSearch) {
+        mobileSearch.close();
+      }
+    }
   }
 
   close() {
     this.isOpen = false;
     this.menuToggle.setAttribute('aria-expanded', 'false');
-    this.mobileNav?.classList.remove('is-open');
-    document.body.style.overflow = '';
+    this.mobileNav?.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+    this.mobileNav?.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+  }
+}
+
+// Mobile Search Component
+class MobileSearch {
+  constructor() {
+    this.searchToggle = document.getElementById('mobile-search-toggle');
+    this.searchField = document.getElementById('mobile-search-field');
+    this.menuToggle = document.getElementById('mobile-menu-toggle');
+    this.isOpen = false;
+    
+    if (this.searchToggle) {
+      this.bindEvents();
+    }
+  }
+
+  bindEvents() {
+    this.searchToggle.addEventListener('click', () => {
+      this.toggle();
+    });
+
+    // Close search when clicking outside
+    document.addEventListener('click', (e) => {
+      if (this.isOpen && !this.searchToggle.contains(e.target) && !this.searchField?.contains(e.target)) {
+        this.close();
+      }
+    });
+  }
+
+  toggle() {
+    if (this.isOpen) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+
+  open() {
+    this.isOpen = true;
+    this.searchField?.classList.remove('hidden');
+    // this.menuToggle?.classList.add('hidden');
+    
+    // Close mobile menu if open
+    const mobileNav = document.getElementById('mobile-nav');
+    if (mobileNav && mobileNav.classList.contains('opacity-100')) {
+      const mobileMenu = window.modelArena?.mobileMenu;
+      if (mobileMenu) {
+        mobileMenu.close();
+      }
+    }
+    
+    // Focus the search input
+    const searchInput = this.searchField?.querySelector('input[type="search"]');
+    setTimeout(() => {
+      searchInput?.focus();
+    }, 100);
+  }
+
+  close() {
+    this.isOpen = false;
+    this.searchField?.classList.add('hidden');
+    this.menuToggle?.classList.remove('hidden');
   }
 }
 
@@ -491,7 +565,7 @@ const utils = {
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
-  new ModelArena();
+  window.modelArena = new ModelArena();
   new PerformanceMonitor();
 });
 
