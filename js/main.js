@@ -15,6 +15,7 @@ class ModelArena {
   initializeComponents() {
     this.mobileMenu = new MobileMenu();
     this.mobileSearch = new MobileSearch();
+    this.authModals = new AuthModals();
     this.searchForm = new SearchForm();
     this.favoriteButtons = new FavoriteButtons();
     this.imageLoader = new ImageLoader();
@@ -32,6 +33,7 @@ class ModelArena {
       if (e.key === 'Escape') {
         this.mobileMenu.close();
         this.mobileSearch.close();
+        this.authModals.closeAll();
       }
     });
 
@@ -291,6 +293,217 @@ class MobileSearch {
     this.isOpen = false;
     this.searchField?.classList.add('hidden');
     this.menuToggle?.classList.remove('hidden');
+  }
+}
+
+// Auth Modals Component
+class AuthModals {
+  constructor() {
+    this.loginModal = document.getElementById('login-modal');
+    this.signupModal = document.getElementById('signup-modal');
+    this.loginForm = document.getElementById('login-form');
+    this.signupForm = document.getElementById('signup-form');
+    
+    this.bindEvents();
+    this.setupPasswordToggles();
+  }
+
+  bindEvents() {
+    // Use event delegation to handle all auth buttons
+    document.addEventListener('click', (e) => {
+      const target = e.target;
+      
+      // Check if clicked element is a button with login or register text
+      if (target.tagName === 'BUTTON') {
+        const buttonText = target.textContent.trim();
+        
+        if (buttonText === 'Log in') {
+          e.preventDefault();
+          this.openLogin();
+          return;
+        }
+        
+        if (buttonText === 'Register') {
+          e.preventDefault();
+          this.openSignup();
+          return;
+        }
+      }
+    });
+
+    // Modal close buttons
+    document.getElementById('login-modal-close')?.addEventListener('click', () => {
+      this.closeLogin();
+    });
+    
+    document.getElementById('signup-modal-close')?.addEventListener('click', () => {
+      this.closeSignup();
+    });
+
+    // Switch between modals
+    document.getElementById('open-signup-modal')?.addEventListener('click', () => {
+      this.closeLogin();
+      this.openSignup();
+    });
+    
+    document.getElementById('open-login-modal')?.addEventListener('click', () => {
+      this.closeSignup();
+      this.openLogin();
+    });
+
+    // Close modal when clicking backdrop
+    this.loginModal?.addEventListener('click', (e) => {
+      if (e.target === this.loginModal) {
+        this.closeLogin();
+      }
+    });
+    
+    this.signupModal?.addEventListener('click', (e) => {
+      if (e.target === this.signupModal) {
+        this.closeSignup();
+      }
+    });
+
+    // Form submissions
+    this.loginForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.handleLogin();
+    });
+    
+    this.signupForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.handleSignup();
+    });
+  }
+
+  setupPasswordToggles() {
+    // Login password toggle
+    const loginPasswordToggle = document.getElementById('login-password-toggle');
+    const loginPasswordInput = document.getElementById('login-password');
+    
+    loginPasswordToggle?.addEventListener('click', () => {
+      this.togglePasswordVisibility(loginPasswordInput, loginPasswordToggle);
+    });
+
+    // Signup password toggles
+    const signupPasswordToggle = document.getElementById('signup-password-toggle');
+    const signupPasswordInput = document.getElementById('signup-password');
+    
+    signupPasswordToggle?.addEventListener('click', () => {
+      this.togglePasswordVisibility(signupPasswordInput, signupPasswordToggle);
+    });
+
+    const signupConfirmToggle = document.getElementById('signup-confirm-password-toggle');
+    const signupConfirmInput = document.getElementById('signup-confirm-password');
+    
+    signupConfirmToggle?.addEventListener('click', () => {
+      this.togglePasswordVisibility(signupConfirmInput, signupConfirmToggle);
+    });
+  }
+
+  togglePasswordVisibility(input, toggle) {
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    
+    // Update icon (you can customize this based on your icon preference)
+    const svg = toggle.querySelector('svg');
+    if (isPassword) {
+      // Show eye-slash icon when password is visible
+      svg.innerHTML = '<path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18"/>';
+    } else {
+      // Show eye icon when password is hidden
+      svg.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+    }
+  }
+
+  openLogin() {
+    this.closeSignup(); // Close signup if open
+    this.loginModal?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    // Focus first input
+    setTimeout(() => {
+      const firstInput = this.loginModal?.querySelector('input');
+      firstInput?.focus();
+    }, 100);
+  }
+
+  closeLogin() {
+    this.loginModal?.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  openSignup() {
+    this.closeLogin(); // Close login if open
+    this.signupModal?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    // Focus first input
+    setTimeout(() => {
+      const firstInput = this.signupModal?.querySelector('input');
+      firstInput?.focus();
+    }, 100);
+  }
+
+  closeSignup() {
+    this.signupModal?.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  closeAll() {
+    this.closeLogin();
+    this.closeSignup();
+  }
+
+  handleLogin() {
+    // Get form data
+    const formData = new FormData(this.loginForm);
+    const loginData = {
+      email: formData.get('email'),
+      password: formData.get('password'),
+      remember: formData.get('remember')
+    };
+
+    console.log('Login attempt:', loginData);
+    
+    // Here you would typically send the data to your backend
+    // For now, just show a success message
+    alert('Login functionality would be implemented here');
+    
+    // Close modal on successful login
+    // this.closeLogin();
+  }
+
+  handleSignup() {
+    // Get form data
+    const formData = new FormData(this.signupForm);
+    const signupData = {
+      fullName: formData.get('fullName'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+      confirmPassword: formData.get('confirmPassword'),
+      terms: formData.get('terms')
+    };
+
+    // Basic validation
+    if (signupData.password !== signupData.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    if (!signupData.terms) {
+      alert('Please agree to the Terms & Conditions');
+      return;
+    }
+
+    console.log('Signup attempt:', signupData);
+    
+    // Here you would typically send the data to your backend
+    // For now, just show a success message
+    alert('Signup functionality would be implemented here');
+    
+    // Close modal on successful signup
+    // this.closeSignup();
   }
 }
 
