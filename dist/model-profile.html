@@ -285,7 +285,10 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto max-w-screen-xl px-6 py-8" role="main">
+    <main
+      class="container mx-auto max-w-screen-xl px-6 md:py-8 py-4"
+      role="main"
+    >
       <!-- Breadcrumb -->
       <nav class="mb-6" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2 text-sm">
@@ -307,12 +310,12 @@
         </ol>
       </nav>
       <div
-        class="grid grid-cols-1 lg:grid-cols-24 gap-7 bg-white rounded-4xl shadow-card-shadow-grey px-[33px] py-7.5"
+        class="grid grid-cols-1 lg:grid-cols-24 gap-7 mb-4 bg-white rounded-4xl shadow-card-shadow-grey lg:px-[33px] md:px-6 sm:px-4 px-2.5 md:py-7.5 py-2.5"
       >
         <!-- Model Image Section -->
         <div class="lg:col-span-9">
           <div
-            class="relative bg-white group rounded-2xl overflow-hidden shadow-card-shadow-grey-card-light p-3.5"
+            class="relative bg-white group rounded-2xl overflow-hidden shadow-card-shadow-grey-card-light md:p-3.5 p-2.5"
           >
             <!-- Main Image -->
             <div class="relative rounded-2xl overflow-hidden aspect-[4/4]">
@@ -482,12 +485,12 @@
         <!-- Model Information Section -->
         <div class="lg:col-span-15 lg:pl-10 pl-0">
           <!-- Model Header -->
-          <div class="p-0 mb-0">
+          <div class="md:p-0 p-1.5 mb-0">
             <!-- Name and Rating Block -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start">
               <!-- Modal Name Info -->
               <div
-                class="flex flex-col items-start gap-4 col-span-7 md:mb-6 mb-4"
+                class="flex flex-col items-start gap-4 col-span-7 md:mb-6 sm:mb-4 mb-0"
               >
                 <!-- Stars Rating -->
                 <div class="flex items-center gap-1 mb-0">
@@ -565,7 +568,7 @@
 
               <!-- Modal rating Info -->
               <div
-                class="flex flex-col gap-4 col-span-5 p-4.5 shadow-card-shadow-grey-card-light rounded-xl"
+                class="flex flex-col gap-4 col-span-5 p-4.5 md:mb-0 mb-5.5 shadow-card-shadow-grey-card-light rounded-xl"
               >
                 <!-- Rate This Model Section -->
                 <div class="flex justify-between items-center mb-0">
@@ -679,7 +682,7 @@
               <div
                 class="flex flex-col items-start gap-4 col-span-13 md:mb-6 lg:mb-0 mb-4"
               >
-                <div class="space-y-4 mb-6">
+                <div class="space-y-4 md:mb-6 mb-0">
                   <div
                     class="flex justify-start items-center font-normal gap-2"
                   >
@@ -1020,9 +1023,9 @@
           </div>
 
           <!-- Description Section -->
-          <div class="p-0">
+          <div class="md:p-0 p-1.5 px-0">
             <div
-              class="max-h-[250px] lg:text-base text-sm text-secondary leading-tight text-justify overflow-y-auto scrollbar-thin-track space-y-3"
+              class="max-h-[250px] lg:text-base text-sm text-secondary leading-tight text-justify overflow-y-scroll custom-scroll lg:pr-4 pr-3 space-y-3"
             >
               <p>
                 Bringing a mix of elegance and playful charm, Dani creates
@@ -1067,7 +1070,954 @@
           </div>
         </div>
       </div>
+
+      <!-- Modals gallery -->
+      <div
+        class="bg-white container !px-0 mx-auto max-w-screen-xl rounded-4xl shadow-card-shadow-grey mb-4"
+      >
+        <div class="lg:px-[38px] md:px-8 sm:px-6 px-2.5 md:py-8.5 py-6.5">
+          <h2 class="section-title">Additional Photos</h2>
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-3 lg:gap-x-4 lg:gap-y-6 gap-y-5"
+          >
+            <!-- Model Card 1 -->
+            <div
+              href="./model-profile.html"
+              class="transition-all duration-300"
+            >
+              <div
+                class="relative overflow-hidden rounded-2xl mb-2 aspect-[36/34] cursor-cell"
+              >
+                <img
+                  src="./assets/images/models/modal-2.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image hover:scale-105 w-full h-full object-cover object-center transition-transform duration-500"
+                />
+              </div>
+              <div
+                class="flex justify-between items-center md:text-2xl sm:text-xl text-lg font-medium leading-none"
+              >
+                <h3 class="text-primary">Cover Photo</h3>
+                <span class="text-secondary">2025-08-01</span>
+              </div>
+            </div>
+
+            <!-- Model Card 2 -->
+            <div
+              href="./model-profile.html"
+              class="transition-all duration-300"
+            >
+              <div
+                class="relative overflow-hidden rounded-2xl mb-2 aspect-[36/34] cursor-cell"
+              >
+                <img
+                  src="./assets/images/models/modal-2.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image hover:scale-105 w-full h-full object-cover object-center transition-transform duration-500"
+                />
+              </div>
+              <div
+                class="flex justify-between items-center md:text-2xl sm:text-xl text-lg font-medium leading-none"
+              >
+                <h3 class="text-primary">Profile Picture</h3>
+                <span class="text-secondary">2025-08-01</span>
+              </div>
+            </div>
+
+            <!-- Model Card 3 -->
+            <div
+              href="./model-profile.html"
+              class="transition-all duration-300"
+            >
+              <div
+                class="relative overflow-hidden rounded-2xl mb-2 aspect-[36/34] cursor-cell"
+              >
+                <img
+                  src="./assets/images/models/modal-2.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image hover:scale-105 w-full h-full object-cover object-center transition-transform duration-500"
+                />
+              </div>
+              <div
+                class="flex justify-between items-center md:text-2xl sm:text-xl text-lg font-medium leading-none"
+              >
+                <h3 class="text-primary">Gallery Shot</h3>
+                <span class="text-secondary">2025-08-01</span>
+              </div>
+            </div>
+
+            <!-- Model Card 4 -->
+            <div
+              href="./model-profile.html"
+              class="transition-all duration-300"
+            >
+              <div
+                class="relative overflow-hidden rounded-2xl mb-2 aspect-[36/34] cursor-cell"
+              >
+                <img
+                  src="./assets/images/models/modal-2.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image hover:scale-105 w-full h-full object-cover object-center transition-transform duration-500"
+                />
+              </div>
+              <div
+                class="flex justify-between items-center md:text-2xl sm:text-xl text-lg font-medium leading-none"
+              >
+                <h3 class="text-primary">Header Image</h3>
+                <span class="text-secondary">2025-08-01</span>
+              </div>
+            </div>
+
+            <!-- Model Card 5 -->
+            <div
+              href="./model-profile.html"
+              class="transition-all duration-300"
+            >
+              <div
+                class="relative overflow-hidden rounded-2xl mb-2 aspect-[36/34] cursor-cell"
+              >
+                <img
+                  src="./assets/images/models/modal-2.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image hover:scale-105 w-full h-full object-cover object-center transition-transform duration-500"
+                />
+              </div>
+              <div
+                class="flex justify-between items-center md:text-2xl sm:text-xl text-lg font-medium leading-none"
+              >
+                <h3 class="text-primary">Cover Photo</h3>
+                <span class="text-secondary">2025-08-01</span>
+              </div>
+            </div>
+
+            <!-- Model Card 6 -->
+            <div
+              href="./model-profile.html"
+              class="transition-all duration-300"
+            >
+              <div
+                class="relative overflow-hidden rounded-2xl mb-2 aspect-[36/34] cursor-cell"
+              >
+                <img
+                  src="./assets/images/models/modal-2.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image hover:scale-105 w-full h-full object-cover object-center transition-transform duration-500"
+                />
+              </div>
+              <div
+                class="flex justify-between items-center md:text-2xl sm:text-xl text-lg font-medium leading-none"
+              >
+                <h3 class="text-primary">Profile Picture</h3>
+                <span class="text-secondary">2025-08-01</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similar Shots -->
+      <div
+        class="bg-white container !px-0 mx-auto max-w-screen-xl rounded-4xl shadow-card-shadow-grey"
+      >
+        <div class="lg:px-[38px] md:px-8 sm:px-6 px-2.5 md:py-8.5 py-6.5">
+          <h2 class="section-title">Similar Models</h2>
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-3 lg:gap-x-4 lg:gap-y-6 gap-y-5"
+          >
+            <!-- Model Card 1 -->
+            <a
+              href="./model-profile.html"
+              class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
+            >
+              <div class="relative overflow-hidden">
+                <img
+                  src="./assets/images/models/featured-model.jpg.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image w-full h-auto object-cover object-center transition-transform duration-500"
+                />
+                <div class="absolute top-1.5 right-1.5">
+                  <span class="badge-rating"
+                    ><span class="star">★</span>4.5</span
+                  >
+                </div>
+              </div>
+              <div class="px-3 py-2.5 pr-4">
+                <div class="mb-3 lg:mb-4">
+                  <span class="tag-name mb-1.5 block">@hotnessoverload</span>
+                  <h3 class="text-secondary leading-none card-title">
+                    Dani Danger
+                  </h3>
+                </div>
+                <div class="flex items-center justify-between flex-wrap">
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/camera.svg"
+                      alt="eye"
+                      class="w-4"
+                    />
+                    <span class="card-info-points">74K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/video-recorder.svg"
+                      alt="eye"
+                      class="w-5"
+                    />
+                    <span class="card-info-points">64</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/heart.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">946K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/tag.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">Free</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <!-- Model Card 2 -->
+            <a
+              href="./model-profile.html"
+              class="model-card bg-white rounded-2xl overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
+            >
+              <div class="relative overflow-hidden">
+                <img
+                  src="./assets/images/models/modal-2.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image w-full h-auto object-cover object-center transition-transform duration-500"
+                />
+                <div class="absolute top-1.5 right-1.5">
+                  <span class="badge-rating"
+                    ><span class="star">★</span>4.5</span
+                  >
+                </div>
+              </div>
+              <div class="px-3 py-2.5 pr-4">
+                <div class="mb-3 lg:mb-4">
+                  <span class="tag-name mb-1.5 block">@hotnessoverload</span>
+                  <h3 class="text-secondary leading-none card-title">
+                    Dani Danger
+                  </h3>
+                </div>
+                <div class="flex items-center justify-between flex-wrap">
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/camera.svg"
+                      alt="eye"
+                      class="w-4"
+                    />
+                    <span class="card-info-points">74K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/video-recorder.svg"
+                      alt="eye"
+                      class="w-5"
+                    />
+                    <span class="card-info-points">64</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/heart.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">946K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/tag.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">Free</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <!-- Model Card 3 -->
+            <a
+              href="./model-profile.html"
+              class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
+            >
+              <div class="relative overflow-hidden">
+                <img
+                  src="./assets/images/models/modal-3.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image w-full h-auto object-cover object-center transition-transform duration-500"
+                />
+                <div class="absolute top-1.5 right-1.5">
+                  <span class="badge-rating"
+                    ><span class="star">★</span>4.5</span
+                  >
+                </div>
+              </div>
+              <div class="px-3 py-2.5 pr-4">
+                <div class="mb-3 lg:mb-4">
+                  <span class="tag-name mb-1.5 block">@hotnessoverload</span>
+                  <h3 class="text-secondary leading-none card-title">
+                    Dani Danger
+                  </h3>
+                </div>
+                <div class="flex items-center justify-between flex-wrap">
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/camera.svg"
+                      alt="eye"
+                      class="w-4"
+                    />
+                    <span class="card-info-points">74K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/video-recorder.svg"
+                      alt="eye"
+                      class="w-5"
+                    />
+                    <span class="card-info-points">64</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/heart.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">946K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/tag.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">Free</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <!-- Model Card 4 -->
+            <a
+              href="./model-profile.html"
+              class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
+            >
+              <div class="relative overflow-hidden">
+                <img
+                  src="./assets/images/models/modal-4.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image w-full h-auto object-cover object-center transition-transform duration-500"
+                />
+                <div class="absolute top-1.5 right-1.5">
+                  <span class="badge-rating"
+                    ><span class="star">★</span>4.5</span
+                  >
+                </div>
+              </div>
+              <div class="px-3 py-2.5 pr-4">
+                <div class="mb-3 lg:mb-4">
+                  <span class="tag-name mb-1.5 block">@hotnessoverload</span>
+                  <h3 class="text-secondary leading-none card-title">
+                    Dani Danger
+                  </h3>
+                </div>
+                <div class="flex items-center justify-between flex-wrap">
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/camera.svg"
+                      alt="eye"
+                      class="w-4"
+                    />
+                    <span class="card-info-points">74K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/video-recorder.svg"
+                      alt="eye"
+                      class="w-5"
+                    />
+                    <span class="card-info-points">64</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/heart.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">946K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/tag.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">Free</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <!-- Model Card 5 -->
+            <a
+              href="./model-profile.html"
+              class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
+            >
+              <div class="relative overflow-hidden">
+                <img
+                  src="./assets/images/models/modal-5.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image w-full h-auto object-cover object-center transition-transform duration-500"
+                />
+                <div class="absolute top-1.5 right-1.5">
+                  <span class="badge-rating"
+                    ><span class="star">★</span>4.5</span
+                  >
+                </div>
+              </div>
+              <div class="px-3 py-2.5 pr-4">
+                <div class="mb-3 lg:mb-4">
+                  <span class="tag-name mb-1.5 block">@hotnessoverload</span>
+                  <h3 class="text-secondary leading-none card-title">
+                    Dani Danger
+                  </h3>
+                </div>
+                <div class="flex items-center justify-between flex-wrap">
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/camera.svg"
+                      alt="eye"
+                      class="w-4"
+                    />
+                    <span class="card-info-points">74K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/video-recorder.svg"
+                      alt="eye"
+                      class="w-5"
+                    />
+                    <span class="card-info-points">64</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/heart.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">946K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/tag.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">Free</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <!-- Model Card 6 -->
+            <a
+              href="./model-profile.html"
+              class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
+            >
+              <div class="relative overflow-hidden">
+                <img
+                  src="./assets/images/models/modal-6.webp"
+                  alt="Dani Danger"
+                  loading="eager"
+                  class="model-card-image w-full h-auto object-cover object-center transition-transform duration-500"
+                />
+                <div class="absolute top-1.5 right-1.5">
+                  <span class="badge-rating"
+                    ><span class="star">★</span>4.5</span
+                  >
+                </div>
+              </div>
+              <div class="px-3 py-2.5 pr-4">
+                <div class="mb-3 lg:mb-4">
+                  <span class="tag-name mb-1.5 block">@hotnessoverload</span>
+                  <h3 class="text-secondary leading-none card-title">
+                    Dani Danger
+                  </h3>
+                </div>
+                <div class="flex items-center justify-between flex-wrap">
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/camera.svg"
+                      alt="eye"
+                      class="w-4"
+                    />
+                    <span class="card-info-points">74K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="./assets/icons/video-recorder.svg"
+                      alt="eye"
+                      class="w-5"
+                    />
+                    <span class="card-info-points">64</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/heart.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">946K</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img src="./assets/icons/tag.svg" alt="eye" class="w-5" />
+                    <span class="card-info-points">Free</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
     </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-blue-bg text-white md:pt-10 pt-12 md:pb-8 pb-13 mt-4"
+      role="contentinfo"
+    >
+      <div class="container mx-auto max-w-screen-xl">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-9 md:gap-8 mb-10 w-full"
+        >
+          <div
+            class="flex flex-wrap md:flex-row flex-col items-center md:w-auto w-full lg:gap-x-24 sm:gap-x-12 gap-6 gap-y-5.5"
+          >
+            <a
+              href="./contact-us.html"
+              class="text-base text-white hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+              >Contact Us</a
+            >
+            <a
+              href="#"
+              class="text-base text-white hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+              >DMCA</a
+            >
+            <a
+              href="./privacy-policy.html"
+              class="text-base text-white hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+              >Privacy Policy</a
+            >
+            <a
+              href="./terms-of-service.html"
+              class="text-base text-white hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+              >Terms of Service</a
+            >
+          </div>
+          <div
+            class="flex items-center md:justify-start justify-center md:w-auto w-full gap-6"
+          >
+            <a
+              href="#"
+              class="transition-all duration-200 hover:-translate-y-1"
+              aria-label="Instagram"
+            >
+              <img
+                src="./assets/icons/Social icon-3.svg"
+                alt="Instagram"
+                class="w-6 h-6"
+              />
+            </a>
+            <a
+              href="#"
+              class="transition-all duration-200 hover:-translate-y-1"
+              aria-label="Instagram"
+            >
+              <img
+                src="./assets/icons/Social icon-2.svg"
+                alt="Instagram"
+                class="w-6 h-6"
+              />
+            </a>
+            <a
+              href="#"
+              class="transition-all duration-200 hover:-translate-y-1"
+              aria-label="Instagram"
+            >
+              <img
+                src="./assets/icons/fb.svg"
+                alt="Instagram"
+                class="w-6 h-6"
+              />
+            </a>
+            <a
+              href="#"
+              class="transition-all duration-200 hover:-translate-y-1"
+              aria-label="Instagram"
+            >
+              <img
+                src="./assets/icons/tiktok.svg"
+                alt="Instagram"
+                class="w-6 h-6"
+              />
+            </a>
+            <a
+              href="#"
+              class="transition-all duration-200 hover:-translate-y-1"
+              aria-label="Instagram"
+            >
+              <img
+                src="./assets/icons/Bluesky.svg"
+                alt="Instagram"
+                class="w-6 h-6"
+              />
+            </a>
+          </div>
+        </div>
+        <div class="md:pt-6 pt-1 text-center">
+          <p class="text-base leading-none text-light2 m-0">
+            © 2024 Model Arena. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div
+      id="login-modal"
+      class="fixed inset-0 bg-black/15 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden"
+    >
+      <div
+        class="bg-white rounded-3xl shadow-card-shadow-pink max-w-[596px] w-full max-h-[90vh] overflow-y-auto relative scrollbar-thin"
+      >
+        <!-- Close Button -->
+        <button
+          class="absolute top-4 cursor-pointer right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
+          id="login-modal-close"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+
+        <div class="md:px-11 px-5 py-8.5">
+          <!-- Logo -->
+          <div class="text-center mb-8">
+            <img
+              src="./assets/images/logo.webp"
+              alt="ModelArena"
+              class="h-12 mx-auto md:mb-6 mb-4"
+            />
+            <h2 class="md:text-2xl text-xl font-medium text-secondary">
+              <span class="text-primary">Log in to</span> your account
+            </h2>
+          </div>
+
+          <!-- Login Form -->
+          <form id="login-form" class="space-y-4 flex flex-col">
+            <!-- Email/Username Field -->
+            <div>
+              <label
+                class="block md:text-lg sm:text-sm text-xs font-medium text-secondary md:mb-1.5 mb-1"
+              >
+                Email or Username
+              </label>
+              <input
+                type="text"
+                name="email"
+                class="w-full px-4 md:py-4 py-2 border-1 border-primary md:rounded-[10px] rounded-[6px] focus:outline-none focus:border-primary-dark transition-colors placeholder-light4"
+                placeholder="Enter your email or username"
+                required
+              />
+            </div>
+
+            <!-- Password Field -->
+            <div>
+              <label
+                class="block md:text-lg sm:text-sm text-xs font-medium text-secondary md:mb-1.5 mb-1"
+              >
+                Password
+              </label>
+              <div class="relative">
+                <input
+                  type="password"
+                  name="password"
+                  class="w-full px-4 md:py-4 py-2 border-1 border-primary md:rounded-[10px] rounded-[6px] focus:outline-none focus:border-primary-dark transition-colors placeholder-light4"
+                  placeholder="Enter your password"
+                  required
+                  id="login-password"
+                />
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  id="login-password-toggle"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="flex justify-between items-center md:mb-7 mb-6">
+              <label class="flex items-center">
+                <input
+                  type="checkbox"
+                  name="remember"
+                  class="custom-checkbox mr-2"
+                />
+                <span class="md:text-lg text-base font-medium text-secondary"
+                  >Remember me</span
+                >
+              </label>
+              <a
+                href="#"
+                class="md:text-lg text-base font-medium text-primary hover:text-primary-dark transition-colors"
+              >
+                Forget Password
+              </a>
+            </div>
+
+            <!-- Login Button -->
+            <button
+              type="submit"
+              class="w-full max-w-3/4 mx-auto py-3 bg-gradient-to-b from-[#F093FB] to-[#F5576C] text-white font-semibold rounded-full md:text-base text-sm cursor-pointer hover:from-primary hover:to-primary-light transition-all duration-200 transform hover:scale-105"
+            >
+              Log In
+            </button>
+          </form>
+
+          <!-- Social Login -->
+          <div class="mt-4">
+            <p class="text-center md:text-lg text-sm text-secondary mb-3">
+              Or continue with
+            </p>
+            <div class="flex justify-center gap-3">
+              <button class="transition-colors cursor-pointer">
+                <img
+                  src="https://developers.google.com/identity/images/g-logo.png"
+                  alt="Google"
+                  class="w-7 h-7"
+                />
+              </button>
+              <button class="transition-colors cursor-pointer">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sign Up Link -->
+          <p
+            class="text-center md:text-lg text-base font-normal text-secondary mt-6"
+          >
+            Don't have an account?
+            <button
+              class="text-primary font-medium cursor-pointer hover:text-primary-dark transition-colors"
+              id="open-signup-modal"
+            >
+              Register here
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div
+      id="signup-modal"
+      class="fixed inset-0 bg-black/15 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden"
+    >
+      <div
+        class="bg-white rounded-3xl shadow-card-shadow-pink max-w-[596px] w-full max-h-[90vh] overflow-y-auto relative scrollbar-thin"
+      >
+        <!-- Close Button -->
+        <button
+          class="absolute top-4 cursor-pointer right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
+          id="signup-modal-close"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+
+        <div class="md:px-11 px-5 py-8.5">
+          <!-- Logo -->
+          <div class="text-center mb-8">
+            <img
+              src="./assets/images/logo.webp"
+              alt="ModelArena"
+              class="h-12 mx-auto md:mb-6 mb-4"
+            />
+            <h2 class="md:text-2xl text-xl font-medium text-secondary">
+              <span class="text-primary">Register</span> your account
+            </h2>
+          </div>
+
+          <!-- Signup Form -->
+          <form id="signup-form" class="space-y-4 flex flex-col">
+            <!-- Full Name Field -->
+            <div>
+              <label
+                class="block md:text-lg sm:text-sm text-xs font-medium text-secondary md:mb-1.5 mb-1"
+              >
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                class="w-full px-4 md:py-4 py-2 border-1 border-primary md:rounded-[10px] rounded-[6px] focus:outline-none focus:border-primary-dark transition-colors placeholder-light4"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            <!-- Email Field -->
+            <div>
+              <label
+                class="block md:text-lg sm:text-sm text-xs font-medium text-secondary md:mb-1.5 mb-1"
+              >
+                Email Address
+              </label>
+              <input
+                type="email"
+                name="email"
+                class="w-full px-4 md:py-4 py-2 border-1 border-primary md:rounded-[10px] rounded-[6px] focus:outline-none focus:border-primary-dark transition-colors placeholder-light4"
+                placeholder="Enter your email address"
+                required
+              />
+            </div>
+
+            <!-- Password Field -->
+            <div>
+              <label
+                class="block md:text-lg sm:text-sm text-xs font-medium text-secondary md:mb-1.5 mb-1"
+              >
+                Password
+              </label>
+              <div class="relative">
+                <input
+                  type="password"
+                  name="password"
+                  class="w-full px-4 md:py-4 py-2 border-1 border-primary md:rounded-[10px] rounded-[6px] focus:outline-none focus:border-primary-dark transition-colors placeholder-light4"
+                  placeholder="Enter a password"
+                  required
+                  id="signup-password"
+                />
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 cursor-pointer transform -translate-y-1/2 text-secondary hover:text-gray-600"
+                  id="signup-password-toggle"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div>
+              <label
+                class="block md:text-lg sm:text-sm text-xs font-medium text-secondary md:mb-1.5 mb-1"
+              >
+                Confirm Password
+              </label>
+              <div class="relative">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  class="w-full px-4 md:py-4 py-2 border-1 border-primary md:rounded-[10px] rounded-[6px] focus:outline-none focus:border-primary-dark transition-colors placeholder-light4"
+                  placeholder="Confirm your password"
+                  required
+                  id="signup-confirm-password"
+                />
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 cursor-pointer transform -translate-y-1/2 text-secondary hover:text-gray-600"
+                  id="signup-confirm-password-toggle"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div class="flex items-start">
+              <input
+                type="checkbox"
+                name="terms"
+                class="custom-checkbox mt-1 mr-3"
+                required
+              />
+              <span class="md:text-lg text-base font-normal text-secondary">
+                I agree to the
+                <a href="#" class="text-primary hover:text-primary-dark"
+                  >Terms & Conditions</a
+                >
+                and
+                <a href="#" class="text-primary hover:text-primary-dark"
+                  >Privacy Policy</a
+                >
+              </span>
+            </div>
+
+            <!-- Register Button -->
+            <button
+              type="submit"
+              class="w-full max-w-3/4 mx-auto py-3 bg-gradient-to-b from-[#F093FB] to-[#F5576C] text-white font-semibold rounded-full md:text-base text-sm cursor-pointer hover:from-primary hover:to-primary-light transition-all duration-200 transform hover:scale-105"
+            >
+              Register
+            </button>
+          </form>
+
+          <!-- Social Login -->
+          <div class="mt-6">
+            <p class="text-center md:text-lg text-sm text-secondary mb-4">
+              Or Sign up with
+            </p>
+            <div class="flex justify-center gap-4">
+              <button class="transition-colors cursor-pointer">
+                <img
+                  src="https://developers.google.com/identity/images/g-logo.png"
+                  alt="Google"
+                  class="w-7 h-7"
+                />
+              </button>
+              <button class="transition-colors cursor-pointer">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Login Link -->
+          <p
+            class="text-center md:text-lg text-base font-normal text-secondary mt-6"
+          >
+            Already have an account?
+            <button
+              class="text-primary font-medium cursor-pointer hover:text-primary-dark transition-colors"
+              id="open-login-modal"
+            >
+              Log in here
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
 
     <!-- JavaScript -->
     <script src="./js/main.js"></script>

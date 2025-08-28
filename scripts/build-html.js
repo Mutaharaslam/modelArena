@@ -11,6 +11,14 @@ class HTMLBuilder {
       {
         source: path.join(__dirname, '../model-profile.html'),
         output: path.join(__dirname, '../dist/model-profile.html')
+      },
+      {
+        source: path.join(__dirname, '../terms-of-service.html'),
+        output: path.join(__dirname, '../dist/terms-of-service.html')
+      },
+      {
+        source: path.join(__dirname, '../privacy-policy.html'),
+        output: path.join(__dirname, '../dist/privacy-policy.html')
       }
     ];
   }

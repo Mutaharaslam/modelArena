@@ -6,20 +6,20 @@ class ModelArena {
     this.cachedElements = {};
     this.components = {};
     this.isInitialized = false;
-    
+
     // Use RAF for non-critical initialization
     requestAnimationFrame(() => this.init());
   }
 
   init() {
     if (this.isInitialized) return;
-    
+
     this.cacheElements();
     this.initializeComponents();
     this.bindEvents();
     this.setupLazyLoading();
     this.setupAccessibility();
-    
+
     this.isInitialized = true;
   }
 
@@ -27,13 +27,13 @@ class ModelArena {
     // Cache frequently used elements
     this.cachedElements = {
       body: document.body,
-      header: document.querySelector('header'),
-      mobileMenuToggle: document.getElementById('mobile-menu-toggle'),
-      mobileNav: document.getElementById('mobile-nav'),
-      mobileSearchToggle: document.getElementById('mobile-search-toggle'),
-      mobileSearchField: document.getElementById('mobile-search-field'),
-      loginModal: document.getElementById('login-modal'),
-      signupModal: document.getElementById('signup-modal')
+      header: document.querySelector("header"),
+      mobileMenuToggle: document.getElementById("mobile-menu-toggle"),
+      mobileNav: document.getElementById("mobile-nav"),
+      mobileSearchToggle: document.getElementById("mobile-search-toggle"),
+      mobileSearchField: document.getElementById("mobile-search-field"),
+      loginModal: document.getElementById("login-modal"),
+      signupModal: document.getElementById("signup-modal"),
     };
   }
 
@@ -42,15 +42,21 @@ class ModelArena {
     if (this.cachedElements.mobileMenuToggle && this.cachedElements.mobileNav) {
       this.components.mobileMenu = new MobileMenu(this.cachedElements);
     }
-    
-    if (this.cachedElements.mobileSearchToggle && this.cachedElements.mobileSearchField) {
+
+    if (
+      this.cachedElements.mobileSearchToggle &&
+      this.cachedElements.mobileSearchField
+    ) {
       this.components.mobileSearch = new MobileSearch(this.cachedElements);
     }
-    
+
     if (this.cachedElements.loginModal && this.cachedElements.signupModal) {
       this.components.authModals = new AuthModals(this.cachedElements);
     }
-    
+
+    // Initialize add tag modal
+    this.components.addTagModal = new AddTagModal();
+
     // Initialize other components only if needed
     this.components.searchForm = new SearchForm();
     this.components.favoriteButtons = new FavoriteButtons();
@@ -60,30 +66,34 @@ class ModelArena {
   bindEvents() {
     // Use passive listeners for better performance
     const passiveOptions = { passive: true };
-    
+
     // Debounced resize handler
     this.resizeHandler = this.debounce(() => this.handleResize(), 250);
-    window.addEventListener('resize', this.resizeHandler, passiveOptions);
+    window.addEventListener("resize", this.resizeHandler, passiveOptions);
 
     // Keyboard navigation with early exit
-    document.addEventListener('keydown', (e) => {
-      if (e.key !== 'Escape') return;
-      
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+
       // Close components efficiently
-      Object.values(this.components).forEach(component => {
-        if (component && typeof component.close === 'function') {
+      Object.values(this.components).forEach((component) => {
+        if (component && typeof component.close === "function") {
           component.close();
         }
       });
-      
+
       if (this.components.authModals?.closeAll) {
         this.components.authModals.closeAll();
       }
     });
 
     // Single DOMContentLoaded listener
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.setupPageFeatures(), { once: true });
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        () => this.setupPageFeatures(),
+        { once: true }
+      );
     } else {
       this.setupPageFeatures();
     }
@@ -96,14 +106,14 @@ class ModelArena {
 
   setupSmoothScroll() {
     // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", (e) => {
         e.preventDefault();
-        const target = document.querySelector(anchor.getAttribute('href'));
+        const target = document.querySelector(anchor.getAttribute("href"));
         if (target) {
           target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+            behavior: "smooth",
+            block: "start",
           });
         }
       });
@@ -111,30 +121,33 @@ class ModelArena {
   }
 
   setupLazyLoading() {
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            this.imageLoader.loadImage(img);
-            observer.unobserve(img);
-          }
-        });
-      }, {
-        rootMargin: '50px 0px',
-        threshold: 0.01
-      });
+    if ("IntersectionObserver" in window) {
+      const imageObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              this.imageLoader.loadImage(img);
+              observer.unobserve(img);
+            }
+          });
+        },
+        {
+          rootMargin: "50px 0px",
+          threshold: 0.01,
+        }
+      );
 
-      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+      document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
         imageObserver.observe(img);
       });
     }
   }
 
   setupFormValidation() {
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-      form.addEventListener('submit', (e) => {
+    const forms = document.querySelectorAll("form");
+    forms.forEach((form) => {
+      form.addEventListener("submit", (e) => {
         if (!this.validateForm(form)) {
           e.preventDefault();
         }
@@ -144,11 +157,11 @@ class ModelArena {
 
   validateForm(form) {
     let isValid = true;
-    const inputs = form.querySelectorAll('input[required], textarea[required]');
-    
-    inputs.forEach(input => {
+    const inputs = form.querySelectorAll("input[required], textarea[required]");
+
+    inputs.forEach((input) => {
       if (!input.value.trim()) {
-        this.showValidationError(input, 'This field is required');
+        this.showValidationError(input, "This field is required");
         isValid = false;
       } else {
         this.clearValidationError(input);
@@ -159,21 +172,21 @@ class ModelArena {
   }
 
   showValidationError(input, message) {
-    input.classList.add('is-invalid');
-    let errorElement = input.parentNode.querySelector('.form-error');
-    
+    input.classList.add("is-invalid");
+    let errorElement = input.parentNode.querySelector(".form-error");
+
     if (!errorElement) {
-      errorElement = document.createElement('span');
-      errorElement.className = 'form-error';
+      errorElement = document.createElement("span");
+      errorElement.className = "form-error";
       input.parentNode.appendChild(errorElement);
     }
-    
+
     errorElement.textContent = message;
   }
 
   clearValidationError(input) {
-    input.classList.remove('is-invalid');
-    const errorElement = input.parentNode.querySelector('.form-error');
+    input.classList.remove("is-invalid");
+    const errorElement = input.parentNode.querySelector(".form-error");
     if (errorElement) {
       errorElement.remove();
     }
@@ -181,22 +194,22 @@ class ModelArena {
 
   setupAccessibility() {
     // Enhanced focus management
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Tab') {
-        document.body.classList.add('using-keyboard');
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Tab") {
+        document.body.classList.add("using-keyboard");
       }
     });
 
-    document.addEventListener('mousedown', () => {
-      document.body.classList.remove('using-keyboard');
+    document.addEventListener("mousedown", () => {
+      document.body.classList.remove("using-keyboard");
     });
 
     // Skip link functionality
-    const skipLink = document.querySelector('.skip-link');
+    const skipLink = document.querySelector(".skip-link");
     if (skipLink) {
-      skipLink.addEventListener('click', (e) => {
+      skipLink.addEventListener("click", (e) => {
         e.preventDefault();
-        const target = document.querySelector(skipLink.getAttribute('href'));
+        const target = document.querySelector(skipLink.getAttribute("href"));
         if (target) {
           target.focus();
           target.scrollIntoView();
@@ -235,38 +248,39 @@ class MobileMenu {
     this.mobileNav = cachedElements.mobileNav;
     this.isOpen = false;
     this.isAnimating = false;
-    
+
     // Cache classes for better performance
     this.classes = {
-      open: ['opacity-100', 'scale-100', 'pointer-events-auto'],
-      closed: ['opacity-0', 'scale-95', 'pointer-events-none']
+      open: ["opacity-100", "scale-100", "pointer-events-auto"],
+      closed: ["opacity-0", "scale-95", "pointer-events-none"],
     };
-    
+
     this.bindEvents();
   }
 
   bindEvents() {
     // Use event delegation for better performance
-    this.menuToggle.addEventListener('click', (e) => {
+    this.menuToggle.addEventListener("click", (e) => {
       e.preventDefault();
       this.toggle();
     });
 
     // Single click listener using event delegation
-    document.addEventListener('click', (e) => {
+    document.addEventListener("click", (e) => {
       if (!this.isOpen) return;
-      
-      const isClickInside = this.menuToggle.contains(e.target) || 
-                           this.mobileNav?.contains(e.target);
-      
+
+      const isClickInside =
+        this.menuToggle.contains(e.target) ||
+        this.mobileNav?.contains(e.target);
+
       if (!isClickInside) {
         this.close();
       }
     });
 
     // Use event delegation for nav links
-    this.mobileNav?.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
+    this.mobileNav?.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") {
         this.close();
       }
     });
@@ -274,47 +288,47 @@ class MobileMenu {
 
   toggle() {
     if (this.isAnimating) return;
-    
+
     this.isOpen ? this.close() : this.open();
   }
 
   open() {
     if (this.isOpen || this.isAnimating) return;
-    
+
     this.isAnimating = true;
     this.isOpen = true;
-    
+
     // Batch DOM updates
     requestAnimationFrame(() => {
-      this.menuToggle.setAttribute('aria-expanded', 'true');
-      
+      this.menuToggle.setAttribute("aria-expanded", "true");
+
       if (this.mobileNav) {
         this.mobileNav.classList.remove(...this.classes.closed);
         this.mobileNav.classList.add(...this.classes.open);
       }
-      
+
       // Close mobile search efficiently
       window.modelArena?.components?.mobileSearch?.close();
-      
+
       this.isAnimating = false;
     });
   }
 
   close() {
     if (!this.isOpen || this.isAnimating) return;
-    
+
     this.isAnimating = true;
     this.isOpen = false;
-    
+
     // Batch DOM updates
     requestAnimationFrame(() => {
-      this.menuToggle.setAttribute('aria-expanded', 'false');
-      
+      this.menuToggle.setAttribute("aria-expanded", "false");
+
       if (this.mobileNav) {
         this.mobileNav.classList.remove(...this.classes.open);
         this.mobileNav.classList.add(...this.classes.closed);
       }
-      
+
       this.isAnimating = false;
     });
   }
@@ -328,23 +342,24 @@ class MobileSearch {
     this.menuToggle = cachedElements.mobileMenuToggle;
     this.isOpen = false;
     this.searchInput = null;
-    
+
     this.bindEvents();
   }
 
   bindEvents() {
-    this.searchToggle.addEventListener('click', (e) => {
+    this.searchToggle.addEventListener("click", (e) => {
       e.preventDefault();
       this.toggle();
     });
 
     // Single optimized click listener
-    document.addEventListener('click', (e) => {
+    document.addEventListener("click", (e) => {
       if (!this.isOpen) return;
-      
-      const isClickInside = this.searchToggle.contains(e.target) || 
-                           this.searchField?.contains(e.target);
-      
+
+      const isClickInside =
+        this.searchToggle.contains(e.target) ||
+        this.searchField?.contains(e.target);
+
       if (!isClickInside) {
         this.close();
       }
@@ -357,21 +372,23 @@ class MobileSearch {
 
   open() {
     if (this.isOpen) return;
-    
+
     this.isOpen = true;
-    
+
     // Batch DOM updates
     requestAnimationFrame(() => {
-      this.searchField?.classList.remove('hidden');
-      
+      this.searchField?.classList.remove("hidden");
+
       // Close mobile menu efficiently
       window.modelArena?.components?.mobileMenu?.close();
-      
+
       // Cache and focus search input
       if (!this.searchInput) {
-        this.searchInput = this.searchField?.querySelector('input[type="search"]');
+        this.searchInput = this.searchField?.querySelector(
+          'input[type="search"]'
+        );
       }
-      
+
       // Use RAF for focus to avoid layout thrashing
       requestAnimationFrame(() => {
         this.searchInput?.focus();
@@ -381,13 +398,13 @@ class MobileSearch {
 
   close() {
     if (!this.isOpen) return;
-    
+
     this.isOpen = false;
-    
+
     // Batch DOM updates
     requestAnimationFrame(() => {
-      this.searchField?.classList.add('hidden');
-      this.menuToggle?.classList.remove('hidden');
+      this.searchField?.classList.add("hidden");
+      this.menuToggle?.classList.remove("hidden");
     });
   }
 }
@@ -400,50 +417,51 @@ class AuthModals {
     this.loginForm = null;
     this.signupForm = null;
     this.passwordToggles = new Map();
-    
+
     // Cache modal elements
     this.modalElements = new Map();
-    
+
     this.bindEvents();
     this.setupPasswordToggles();
   }
 
   bindEvents() {
     // Single optimized click handler using event delegation
-    document.addEventListener('click', (e) => {
+    document.addEventListener("click", (e) => {
       const target = e.target;
       const targetId = target.id;
-      const buttonText = target.tagName === 'BUTTON' ? target.textContent.trim() : '';
-      
+      const buttonText =
+        target.tagName === "BUTTON" ? target.textContent.trim() : "";
+
       // Handle auth buttons
-      if (buttonText === 'Log in') {
+      if (buttonText === "Log in") {
         e.preventDefault();
         this.openLogin();
         return;
       }
-      
-      if (buttonText === 'Register') {
+
+      if (buttonText === "Register") {
         e.preventDefault();
         this.openSignup();
         return;
       }
-      
+
       // Handle modal controls
       switch (targetId) {
-        case 'login-modal-close':
+        case "login-modal-close":
           this.closeLogin();
           break;
-        case 'signup-modal-close':
+        case "signup-modal-close":
           this.closeSignup();
           break;
-        case 'open-signup-modal':
+        case "open-signup-modal":
           this.switchToSignup();
           break;
-        case 'open-login-modal':
+        case "open-login-modal":
           this.switchToLogin();
           break;
       }
-      
+
       // Handle backdrop clicks
       if (target === this.loginModal) {
         this.closeLogin();
@@ -453,13 +471,13 @@ class AuthModals {
     });
 
     // Optimized form submission handlers
-    document.addEventListener('submit', (e) => {
+    document.addEventListener("submit", (e) => {
       const formId = e.target.id;
-      
-      if (formId === 'login-form') {
+
+      if (formId === "login-form") {
         e.preventDefault();
         this.handleLogin(e.target);
-      } else if (formId === 'signup-form') {
+      } else if (formId === "signup-form") {
         e.preventDefault();
         this.handleSignup(e.target);
       }
@@ -478,130 +496,150 @@ class AuthModals {
 
   setupPasswordToggles() {
     // Login password toggle
-    const loginPasswordToggle = document.getElementById('login-password-toggle');
-    const loginPasswordInput = document.getElementById('login-password');
-    
-    loginPasswordToggle?.addEventListener('click', () => {
+    const loginPasswordToggle = document.getElementById(
+      "login-password-toggle"
+    );
+    const loginPasswordInput = document.getElementById("login-password");
+
+    loginPasswordToggle?.addEventListener("click", () => {
       this.togglePasswordVisibility(loginPasswordInput, loginPasswordToggle);
     });
 
     // Signup password toggles
-    const signupPasswordToggle = document.getElementById('signup-password-toggle');
-    const signupPasswordInput = document.getElementById('signup-password');
-    
-    signupPasswordToggle?.addEventListener('click', () => {
+    const signupPasswordToggle = document.getElementById(
+      "signup-password-toggle"
+    );
+    const signupPasswordInput = document.getElementById("signup-password");
+
+    signupPasswordToggle?.addEventListener("click", () => {
       this.togglePasswordVisibility(signupPasswordInput, signupPasswordToggle);
     });
 
-    const signupConfirmToggle = document.getElementById('signup-confirm-password-toggle');
-    const signupConfirmInput = document.getElementById('signup-confirm-password');
-    
-    signupConfirmToggle?.addEventListener('click', () => {
+    const signupConfirmToggle = document.getElementById(
+      "signup-confirm-password-toggle"
+    );
+    const signupConfirmInput = document.getElementById(
+      "signup-confirm-password"
+    );
+
+    signupConfirmToggle?.addEventListener("click", () => {
       this.togglePasswordVisibility(signupConfirmInput, signupConfirmToggle);
     });
   }
 
   togglePasswordVisibility(input, toggle) {
-    const isPassword = input.type === 'password';
-    input.type = isPassword ? 'text' : 'password';
-    
+    const isPassword = input.type === "password";
+    input.type = isPassword ? "text" : "password";
+
     // Update icon (you can customize this based on your icon preference)
-    const svg = toggle.querySelector('svg');
+    const svg = toggle.querySelector("svg");
     if (isPassword) {
       // Show eye-slash icon when password is visible
-      svg.innerHTML = '<path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18"/>';
+      svg.innerHTML =
+        '<path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18"/>';
     } else {
       // Show eye icon when password is hidden
-      svg.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+      svg.innerHTML =
+        '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
     }
   }
 
   openLogin() {
     this.closeSignup();
-    
+
     if (!this.loginModal) return;
-    
+
     // Batch DOM updates
     requestAnimationFrame(() => {
-      this.loginModal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      
+      this.loginModal.classList.remove("hidden");
+      this.loginModal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+
       // Cache and focus first input
-      if (!this.modalElements.has('loginFirstInput')) {
-        this.modalElements.set('loginFirstInput', this.loginModal.querySelector('input'));
+      if (!this.modalElements.has("loginFirstInput")) {
+        this.modalElements.set(
+          "loginFirstInput",
+          this.loginModal.querySelector("input")
+        );
       }
-      
+
       requestAnimationFrame(() => {
-        this.modalElements.get('loginFirstInput')?.focus();
+        this.modalElements.get("loginFirstInput")?.focus();
       });
     });
   }
 
   closeLogin() {
     if (!this.loginModal) return;
-    
+
     requestAnimationFrame(() => {
-      this.loginModal.classList.add('hidden');
-      document.body.style.overflow = '';
+      this.loginModal.classList.remove("flex");
+      this.loginModal.classList.add("hidden");
+      document.body.style.overflow = "";
     });
   }
 
   openSignup() {
     this.closeLogin();
-    
+
     if (!this.signupModal) return;
-    
+
     // Batch DOM updates
     requestAnimationFrame(() => {
-      this.signupModal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      
+      this.signupModal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+
       // Cache and focus first input
-      if (!this.modalElements.has('signupFirstInput')) {
-        this.modalElements.set('signupFirstInput', this.signupModal.querySelector('input'));
+      if (!this.modalElements.has("signupFirstInput")) {
+        this.modalElements.set(
+          "signupFirstInput",
+          this.signupModal.querySelector("input")
+        );
       }
-      
+
       requestAnimationFrame(() => {
-        this.modalElements.get('signupFirstInput')?.focus();
+        this.modalElements.get("signupFirstInput")?.focus();
       });
     });
   }
 
   closeSignup() {
     if (!this.signupModal) return;
-    
+
     requestAnimationFrame(() => {
-      this.signupModal.classList.add('hidden');
-      document.body.style.overflow = '';
+      this.signupModal.classList.add("hidden");
+      document.body.style.overflow = "";
     });
   }
 
   closeAll() {
     this.closeLogin();
     this.closeSignup();
+    // Also close add tag modal if it exists
+    window.modelArena?.components?.addTagModal?.close();
   }
 
   handleLogin(form) {
     // Get form data efficiently
     const formData = new FormData(form);
     const loginData = {
-      email: formData.get('email')?.trim(),
-      password: formData.get('password'),
-      remember: Boolean(formData.get('remember'))
+      email: formData.get("email")?.trim(),
+      password: formData.get("password"),
+      remember: Boolean(formData.get("remember")),
     };
 
     // Basic validation
     if (!loginData.email || !loginData.password) {
-      this.showError('Please fill in all required fields');
+      this.showError("Please fill in all required fields");
       return;
     }
 
-    console.log('Login attempt:', loginData);
-    
+    console.log("Login attempt:", loginData);
+
     // Here you would typically send the data to your backend
     // For now, just show a success message
-    this.showSuccess('Login functionality would be implemented here');
-    
+    this.showSuccess("Login functionality would be implemented here");
+
     // Close modal on successful login
     // this.closeLogin();
   }
@@ -610,35 +648,35 @@ class AuthModals {
     // Get form data efficiently
     const formData = new FormData(form);
     const signupData = {
-      fullName: formData.get('fullName')?.trim(),
-      email: formData.get('email')?.trim(),
-      password: formData.get('password'),
-      confirmPassword: formData.get('confirmPassword'),
-      terms: Boolean(formData.get('terms'))
+      fullName: formData.get("fullName")?.trim(),
+      email: formData.get("email")?.trim(),
+      password: formData.get("password"),
+      confirmPassword: formData.get("confirmPassword"),
+      terms: Boolean(formData.get("terms")),
     };
 
     // Comprehensive validation
     if (!signupData.fullName || !signupData.email || !signupData.password) {
-      this.showError('Please fill in all required fields');
+      this.showError("Please fill in all required fields");
       return;
     }
 
     if (signupData.password !== signupData.confirmPassword) {
-      this.showError('Passwords do not match');
+      this.showError("Passwords do not match");
       return;
     }
 
     if (!signupData.terms) {
-      this.showError('Please agree to the Terms & Conditions');
+      this.showError("Please agree to the Terms & Conditions");
       return;
     }
 
-    console.log('Signup attempt:', signupData);
-    
+    console.log("Signup attempt:", signupData);
+
     // Here you would typically send the data to your backend
     // For now, just show a success message
-    this.showSuccess('Signup functionality would be implemented here');
-    
+    this.showSuccess("Signup functionality would be implemented here");
+
     // Close modal on successful signup
     // this.closeSignup();
   }
@@ -656,31 +694,152 @@ class AuthModals {
   }
 }
 
+// Add Tag Modal Component
+class AddTagModal {
+  constructor() {
+    this.modal = document.getElementById("add-tag-modal");
+    this.addTagBtn = document.getElementById("add-tag-btn");
+    this.closeBtn = document.getElementById("close-add-tag-modal");
+    this.confirmBtn = document.getElementById("confirm-add-tag");
+    this.tagInput = document.getElementById("tag-input");
+    this.isOpen = false;
+
+    if (this.modal && this.addTagBtn) {
+      this.bindEvents();
+    }
+  }
+
+  bindEvents() {
+    // Open modal
+    this.addTagBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.open();
+    });
+
+    // Close modal
+    this.closeBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.close();
+    });
+
+    // Confirm button
+    this.confirmBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.handleConfirm();
+    });
+
+    // Close on backdrop click
+    this.modal?.addEventListener("click", (e) => {
+      if (e.target === this.modal) {
+        this.close();
+      }
+    });
+
+    // Close on escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && this.isOpen) {
+        this.close();
+      }
+    });
+
+    // Handle enter key in input
+    this.tagInput?.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        this.handleConfirm();
+      }
+    });
+  }
+
+  open() {
+    if (this.isOpen || !this.modal) return;
+
+    this.isOpen = true;
+
+    requestAnimationFrame(() => {
+      this.modal.classList.remove("hidden");
+      this.modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+
+      // Focus input
+      requestAnimationFrame(() => {
+        this.tagInput?.focus();
+      });
+    });
+  }
+
+  close() {
+    if (!this.isOpen || !this.modal) return;
+
+    this.isOpen = false;
+
+    requestAnimationFrame(() => {
+      this.modal.classList.remove("flex");
+      this.modal.classList.add("hidden");
+      document.body.style.overflow = "";
+
+      // Clear input
+      if (this.tagInput) {
+        this.tagInput.value = "";
+      }
+    });
+  }
+
+  handleConfirm() {
+    const tagValue = this.tagInput?.value.trim();
+    
+    if (!tagValue) {
+      this.showError("Please enter a tag");
+      return;
+    }
+
+    // Format tag with # if not present
+    const formattedTag = tagValue.startsWith("#") ? tagValue : `#${tagValue}`;
+    
+    console.log("Adding tag:", formattedTag);
+    
+    // Here you would typically send the tag to your backend
+    // For now, just show a success message and close the modal
+    this.showSuccess(`Tag "${formattedTag}" added successfully`);
+    this.close();
+  }
+
+  showError(message) {
+    console.error(message);
+    // Could implement toast notification here
+  }
+
+  showSuccess(message) {
+    console.log(message);
+    // Could implement toast notification here
+  }
+}
+
 // Search Form Component
 class SearchForm {
   constructor() {
-    this.searchForm = document.querySelector('.search-form');
-    this.searchInput = document.querySelector('.search-form__input');
-    this.searchButton = document.querySelector('.search-form__button');
-    
+    this.searchForm = document.querySelector(".search-form");
+    this.searchInput = document.querySelector(".search-form__input");
+    this.searchButton = document.querySelector(".search-form__button");
+
     if (this.searchForm) {
       this.bindEvents();
     }
   }
 
   bindEvents() {
-    this.searchForm.addEventListener('submit', (e) => {
+    this.searchForm.addEventListener("submit", (e) => {
       e.preventDefault();
       this.handleSearch();
     });
 
-    this.searchInput.addEventListener('input', () => {
+    this.searchInput.addEventListener("input", () => {
       this.handleSearchInput();
     });
 
     // Clear search on escape
-    this.searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
+    this.searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
         this.clearSearch();
       }
     });
@@ -690,7 +849,7 @@ class SearchForm {
     const query = this.searchInput.value.trim();
     if (query) {
       // Implement search functionality
-      console.log('Searching for:', query);
+      console.log("Searching for:", query);
       // You would typically send this to your backend or filter results
       this.showSearchResults(query);
     }
@@ -710,12 +869,12 @@ class SearchForm {
   showSearchResults(query) {
     // Implement search results display
     // This would typically involve filtering the model cards or navigating to a search results page
-    console.log('Showing results for:', query);
+    console.log("Showing results for:", query);
   }
 
   showSuggestions(query) {
     // Implement search suggestions
-    console.log('Showing suggestions for:', query);
+    console.log("Showing suggestions for:", query);
   }
 
   hideSuggestions() {
@@ -723,7 +882,7 @@ class SearchForm {
   }
 
   clearSearch() {
-    this.searchInput.value = '';
+    this.searchInput.value = "";
     this.hideSuggestions();
     this.searchInput.blur();
   }
@@ -732,9 +891,9 @@ class SearchForm {
 // Favorite Buttons Component
 class FavoriteButtons {
   constructor() {
-    this.favoriteButtons = document.querySelectorAll('.favorite-btn');
+    this.favoriteButtons = document.querySelectorAll(".favorite-btn");
     this.favorites = this.loadFavorites();
-    
+
     if (this.favoriteButtons.length > 0) {
       this.bindEvents();
       this.updateButtonStates();
@@ -742,8 +901,8 @@ class FavoriteButtons {
   }
 
   bindEvents() {
-    this.favoriteButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
+    this.favoriteButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
         this.toggleFavorite(button);
@@ -752,23 +911,24 @@ class FavoriteButtons {
   }
 
   toggleFavorite(button) {
-    const modelCard = button.closest('.model-card');
-    const modelId = modelCard?.dataset.modelId || Math.random().toString(36).substr(2, 9);
-    
+    const modelCard = button.closest(".model-card");
+    const modelId =
+      modelCard?.dataset.modelId || Math.random().toString(36).substr(2, 9);
+
     if (this.favorites.includes(modelId)) {
       this.removeFavorite(modelId);
-      button.classList.remove('is-active');
-      this.showToast('Removed from favorites');
+      button.classList.remove("is-active");
+      this.showToast("Removed from favorites");
     } else {
       this.addFavorite(modelId);
-      button.classList.add('is-active');
-      this.showToast('Added to favorites');
+      button.classList.add("is-active");
+      this.showToast("Added to favorites");
     }
 
     // Add animation
-    button.style.transform = 'scale(1.2)';
+    button.style.transform = "scale(1.2)";
     setTimeout(() => {
-      button.style.transform = '';
+      button.style.transform = "";
     }, 150);
   }
 
@@ -778,37 +938,37 @@ class FavoriteButtons {
   }
 
   removeFavorite(modelId) {
-    this.favorites = this.favorites.filter(id => id !== modelId);
+    this.favorites = this.favorites.filter((id) => id !== modelId);
     this.saveFavorites();
   }
 
   loadFavorites() {
     try {
-      return JSON.parse(localStorage.getItem('modelArenaFavorites') || '[]');
+      return JSON.parse(localStorage.getItem("modelArenaFavorites") || "[]");
     } catch {
       return [];
     }
   }
 
   saveFavorites() {
-    localStorage.setItem('modelArenaFavorites', JSON.stringify(this.favorites));
+    localStorage.setItem("modelArenaFavorites", JSON.stringify(this.favorites));
   }
 
   updateButtonStates() {
-    this.favoriteButtons.forEach(button => {
-      const modelCard = button.closest('.model-card');
+    this.favoriteButtons.forEach((button) => {
+      const modelCard = button.closest(".model-card");
       const modelId = modelCard?.dataset.modelId;
-      
+
       if (modelId && this.favorites.includes(modelId)) {
-        button.classList.add('is-active');
+        button.classList.add("is-active");
       }
     });
   }
 
   showToast(message) {
     // Simple toast notification
-    const toast = document.createElement('div');
-    toast.className = 'toast';
+    const toast = document.createElement("div");
+    toast.className = "toast";
     toast.textContent = message;
     toast.style.cssText = `
       position: fixed;
@@ -824,19 +984,19 @@ class FavoriteButtons {
       transform: translateY(20px);
       transition: all 0.3s ease;
     `;
-    
+
     document.body.appendChild(toast);
-    
+
     // Animate in
     requestAnimationFrame(() => {
-      toast.style.opacity = '1';
-      toast.style.transform = 'translateY(0)';
+      toast.style.opacity = "1";
+      toast.style.transform = "translateY(0)";
     });
-    
+
     // Remove after 3 seconds
     setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateY(20px)';
+      toast.style.opacity = "0";
+      toast.style.transform = "translateY(20px)";
       setTimeout(() => {
         document.body.removeChild(toast);
       }, 300);
@@ -858,14 +1018,15 @@ class ImageLoader {
     const tempImg = new Image();
     tempImg.onload = () => {
       img.src = tempImg.src;
-      img.classList.add('loaded');
+      img.classList.add("loaded");
       this.loadedImages.add(img.src);
     };
 
     tempImg.onerror = () => {
-      img.classList.add('error');
+      img.classList.add("error");
       // Set a placeholder image
-      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjEyNSIgeT0iMTc1IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNFMEUwRTAiLz4KPC9zdmc+';
+      img.src =
+        "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxyZWN0IHg9IjEyNSIgeT0iMTc1IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNFMEUwRTAiLz4KPC9zdmc+";
     };
 
     tempImg.src = img.dataset.src || img.src;
@@ -879,10 +1040,14 @@ class PerformanceMonitor {
   }
 
   measurePageLoad() {
-    window.addEventListener('load', () => {
-      if ('performance' in window) {
-        const perfData = performance.getEntriesByType('navigation')[0];
-        console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
+    window.addEventListener("load", () => {
+      if ("performance" in window) {
+        const perfData = performance.getEntriesByType("navigation")[0];
+        console.log(
+          "Page load time:",
+          perfData.loadEventEnd - perfData.loadEventStart,
+          "ms"
+        );
       }
     });
   }
@@ -904,39 +1069,39 @@ const utils = {
 
   throttle(func, limit) {
     let inThrottle;
-    return function() {
+    return function () {
       const args = arguments;
       const context = this;
       if (!inThrottle) {
         func.apply(context, args);
         inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
+        setTimeout(() => (inThrottle = false), limit);
       }
     };
   },
 
   formatNumber(num) {
     if (num >= 1000000) {
-      return (num / 1000000).toFixed(1) + 'M';
+      return (num / 1000000).toFixed(1) + "M";
     } else if (num >= 1000) {
-      return (num / 1000).toFixed(1) + 'K';
+      return (num / 1000).toFixed(1) + "K";
     }
     return num.toString();
-  }
+  },
 };
 
 // Optimized initialization
 (() => {
-  'use strict';
-  
+  "use strict";
+
   // Initialize when DOM is ready or immediately if already loaded
   const init = () => {
     window.modelArena = new ModelArena();
     new PerformanceMonitor();
   };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
   } else {
     // DOM is already loaded, initialize immediately
     requestAnimationFrame(init);
@@ -944,14 +1109,15 @@ const utils = {
 })();
 
 // Service Worker registration for PWA capabilities (optional)
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('SW registered: ', registration);
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((registration) => {
+        console.log("SW registered: ", registration);
       })
-      .catch(registrationError => {
-        console.log('SW registration failed: ', registrationError);
+      .catch((registrationError) => {
+        console.log("SW registration failed: ", registrationError);
       });
   });
 }

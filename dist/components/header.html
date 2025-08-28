@@ -1,0 +1,126 @@
+<!-- Header Component -->
+<header class="sticky top-0 z-50 bg-transparent glass border-none" role="banner">
+  <div class="container mx-auto max-w-screen-xl sm:px-6 pl-6 pr-3.5">
+    <div class="flex items-center justify-between h-16 md:gap-8 gap-0 lg:h-18">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="/" aria-label="ModelArena Home">
+          <img src="./assets/images/logo.webp" alt="ModelArena" class="h-8 w-auto lg:h-9" />
+        </a>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="hidden md:block flex-1 max-w-md mx-0 lg:max-w-lg">
+        <form class="relative" role="search">
+          <div class="relative">
+            <input
+              type="search"
+              class="search-input w-full h-10 pl-10 pr-4 rounded-full border border-light3 bg-white text-sm placeholder-light4 focus:outline-none focus:bg-white transition-all duration-200"
+              placeholder="Search"
+              aria-label="Search models"
+              autocomplete="off"
+            />
+            <button
+              type="submit"
+              class="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary hover:text-primary-500 transition-colors"
+              aria-label="Submit search"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.39zM11 18a7 7 0 1 1 7-7 7 7 0 0 1-7 7z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="hidden lg:block" role="navigation">
+        <ul class="flex items-center gap-8.5">
+          <li>
+            <a href="/" class="relative py-2 text-base font-normal text-secondary transition-colors hover:text-primary leading-none active:text-primary">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="#tags" class="relative py-2 text-base font-normal text-secondary transition-colors hover:text-primary leading-none">Tags</a>
+          </li>
+          <li>
+            <a href="#new-models" class="relative py-2 text-base font-normal text-secondary transition-colors hover:text-primary leading-none">New Models</a>
+          </li>
+          <li>
+            <a href="#recently-updated" class="relative py-2 text-base font-normal text-secondary transition-colors hover:text-primary leading-none">Recently updated Models</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Auth Buttons -->
+      <div class="hidden md:flex items-center gap-8.5 flex-shrink-0">
+        <button class="px-4 py-2 min-w-[93px] cursor-pointer text-sm font-semibold leading-tight text-primary border border-primary rounded-full bg-white hover:bg-primary hover:text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" id="register-btn">
+          Register
+        </button>
+        <button class="px-4 py-2 min-w-[93px] cursor-pointer text-sm font-semibold leading-tight text-white bg-primary rounded-full hover:bg-primary-600 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" id="login-btn">
+          Log in
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center gap-4">
+        <!-- Mobile Search Toggle -->
+        <button id="mobile-search-toggle" class="p-2 text-secondary hover:text-primary transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+        
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="p-2 text-secondary hover:text-primary transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Search Field -->
+    <div id="mobile-search-field" class="md:hidden hidden mt-4">
+      <div class="relative">
+        <input
+          type="search"
+          class="w-full h-10 pl-10 pr-4 rounded-full border border-light3 bg-white text-sm placeholder-light4 focus:outline-none focus:bg-white transition-all duration-200"
+          placeholder="Search"
+          aria-label="Search models"
+          autocomplete="off"
+        />
+        <button
+          type="submit"
+          class="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary hover:text-primary-500 transition-colors"
+          aria-label="Submit search"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.39zM11 18a7 7 0 1 1 7-7 7 7 0 0 1-7 7z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <div id="mobile-nav" class="md:hidden hidden absolute top-full left-0 right-0 bg-white shadow-lg border-t border-gray-100">
+    <div class="px-4 py-6 space-y-4">
+      <a href="/" class="block py-2 text-base font-medium text-secondary hover:text-primary transition-colors">Home</a>
+      <a href="#tags" class="block py-2 text-base font-medium text-secondary hover:text-primary transition-colors">Tags</a>
+      <a href="#new-models" class="block py-2 text-base font-medium text-secondary hover:text-primary transition-colors">New Models</a>
+      <a href="#recently-updated" class="block py-2 text-base font-medium text-secondary hover:text-primary transition-colors">Recently Updated Models</a>
+      
+      <!-- Mobile Auth Buttons -->
+      <div class="pt-4 border-t border-gray-100 space-y-3">
+        <button class="w-full px-4 py-2 text-sm font-semibold text-primary border border-primary rounded-full bg-white hover:bg-primary hover:text-white transition-colors" id="mobile-register-btn">
+          Register
+        </button>
+        <button class="w-full px-4 py-2 text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-600 transition-colors" id="mobile-login-btn">
+          Log in
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
