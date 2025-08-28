@@ -1,50 +1,97 @@
-// ModelArena - Main JavaScript
+// ModelArena - Optimized Main JavaScript
 
 class ModelArena {
   constructor() {
-    this.init();
+    // Cache DOM elements early
+    this.cachedElements = {};
+    this.components = {};
+    this.isInitialized = false;
+    
+    // Use RAF for non-critical initialization
+    requestAnimationFrame(() => this.init());
   }
 
   init() {
+    if (this.isInitialized) return;
+    
+    this.cacheElements();
     this.initializeComponents();
     this.bindEvents();
     this.setupLazyLoading();
     this.setupAccessibility();
+    
+    this.isInitialized = true;
+  }
+
+  cacheElements() {
+    // Cache frequently used elements
+    this.cachedElements = {
+      body: document.body,
+      header: document.querySelector('header'),
+      mobileMenuToggle: document.getElementById('mobile-menu-toggle'),
+      mobileNav: document.getElementById('mobile-nav'),
+      mobileSearchToggle: document.getElementById('mobile-search-toggle'),
+      mobileSearchField: document.getElementById('mobile-search-field'),
+      loginModal: document.getElementById('login-modal'),
+      signupModal: document.getElementById('signup-modal')
+    };
   }
 
   initializeComponents() {
-    this.mobileMenu = new MobileMenu();
-    this.mobileSearch = new MobileSearch();
-    this.authModals = new AuthModals();
-    this.searchForm = new SearchForm();
-    this.favoriteButtons = new FavoriteButtons();
-    this.imageLoader = new ImageLoader();
+    // Only initialize components if their required elements exist
+    if (this.cachedElements.mobileMenuToggle && this.cachedElements.mobileNav) {
+      this.components.mobileMenu = new MobileMenu(this.cachedElements);
+    }
+    
+    if (this.cachedElements.mobileSearchToggle && this.cachedElements.mobileSearchField) {
+      this.components.mobileSearch = new MobileSearch(this.cachedElements);
+    }
+    
+    if (this.cachedElements.loginModal && this.cachedElements.signupModal) {
+      this.components.authModals = new AuthModals(this.cachedElements);
+    }
+    
+    // Initialize other components only if needed
+    this.components.searchForm = new SearchForm();
+    this.components.favoriteButtons = new FavoriteButtons();
+    this.components.imageLoader = new ImageLoader();
   }
 
   bindEvents() {
-    // Global event listeners
-    document.addEventListener('DOMContentLoaded', () => {
-      this.setupSmoothScroll();
-      this.setupFormValidation();
-    });
+    // Use passive listeners for better performance
+    const passiveOptions = { passive: true };
+    
+    // Debounced resize handler
+    this.resizeHandler = this.debounce(() => this.handleResize(), 250);
+    window.addEventListener('resize', this.resizeHandler, passiveOptions);
 
-    // Keyboard navigation
+    // Keyboard navigation with early exit
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        this.mobileMenu.close();
-        this.mobileSearch.close();
-        this.authModals.closeAll();
+      if (e.key !== 'Escape') return;
+      
+      // Close components efficiently
+      Object.values(this.components).forEach(component => {
+        if (component && typeof component.close === 'function') {
+          component.close();
+        }
+      });
+      
+      if (this.components.authModals?.closeAll) {
+        this.components.authModals.closeAll();
       }
     });
 
-    // Window resize handler
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        this.handleResize();
-      }, 250);
-    });
+    // Single DOMContentLoaded listener
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.setupPageFeatures(), { once: true });
+    } else {
+      this.setupPageFeatures();
+    }
+  }
+
+  setupPageFeatures() {
+    this.setupSmoothScroll();
+    this.setupFormValidation();
   }
 
   setupSmoothScroll() {
@@ -159,221 +206,274 @@ class ModelArena {
   }
 
   handleResize() {
-    // Handle responsive behavior
+    // Handle responsive behavior efficiently
     if (window.innerWidth >= 768) {
-      this.mobileMenu.close();
-      this.mobileSearch.close();
+      // Close mobile components efficiently
+      this.components.mobileMenu?.close();
+      this.components.mobileSearch?.close();
     }
+  }
+
+  // Optimized debounce utility
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func.apply(this, args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   }
 }
 
-// Mobile Menu Component
+// Optimized Mobile Menu Component
 class MobileMenu {
-  constructor() {
-    this.menuToggle = document.getElementById('mobile-menu-toggle');
-    this.mobileNav = document.getElementById('mobile-nav');
-    this.header = document.querySelector('header');
+  constructor(cachedElements) {
+    this.menuToggle = cachedElements.mobileMenuToggle;
+    this.mobileNav = cachedElements.mobileNav;
     this.isOpen = false;
+    this.isAnimating = false;
     
-    if (this.menuToggle) {
-      this.bindEvents();
-    }
+    // Cache classes for better performance
+    this.classes = {
+      open: ['opacity-100', 'scale-100', 'pointer-events-auto'],
+      closed: ['opacity-0', 'scale-95', 'pointer-events-none']
+    };
+    
+    this.bindEvents();
   }
 
   bindEvents() {
-    this.menuToggle.addEventListener('click', () => {
+    // Use event delegation for better performance
+    this.menuToggle.addEventListener('click', (e) => {
+      e.preventDefault();
       this.toggle();
     });
 
-    // Close menu when clicking outside
+    // Single click listener using event delegation
     document.addEventListener('click', (e) => {
-      if (this.isOpen && !this.menuToggle.contains(e.target) && !this.mobileNav?.contains(e.target)) {
+      if (!this.isOpen) return;
+      
+      const isClickInside = this.menuToggle.contains(e.target) || 
+                           this.mobileNav?.contains(e.target);
+      
+      if (!isClickInside) {
         this.close();
       }
     });
 
-    // Close menu on navigation link click
-    if (this.mobileNav) {
-      this.mobileNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          this.close();
-        });
-      });
-    }
+    // Use event delegation for nav links
+    this.mobileNav?.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        this.close();
+      }
+    });
   }
 
   toggle() {
-    if (this.isOpen) {
-      this.close();
-    } else {
-      this.open();
-    }
+    if (this.isAnimating) return;
+    
+    this.isOpen ? this.close() : this.open();
   }
 
   open() {
-    this.isOpen = true;
-    this.menuToggle.setAttribute('aria-expanded', 'true');
-    this.mobileNav?.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
-    this.mobileNav?.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
+    if (this.isOpen || this.isAnimating) return;
     
-    // Close mobile search if open
-    const searchField = document.getElementById('mobile-search-field');
-    if (searchField && !searchField.classList.contains('hidden')) {
-      const mobileSearch = window.modelArena?.mobileSearch;
-      if (mobileSearch) {
-        mobileSearch.close();
+    this.isAnimating = true;
+    this.isOpen = true;
+    
+    // Batch DOM updates
+    requestAnimationFrame(() => {
+      this.menuToggle.setAttribute('aria-expanded', 'true');
+      
+      if (this.mobileNav) {
+        this.mobileNav.classList.remove(...this.classes.closed);
+        this.mobileNav.classList.add(...this.classes.open);
       }
-    }
+      
+      // Close mobile search efficiently
+      window.modelArena?.components?.mobileSearch?.close();
+      
+      this.isAnimating = false;
+    });
   }
 
   close() {
+    if (!this.isOpen || this.isAnimating) return;
+    
+    this.isAnimating = true;
     this.isOpen = false;
-    this.menuToggle.setAttribute('aria-expanded', 'false');
-    this.mobileNav?.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
-    this.mobileNav?.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+    
+    // Batch DOM updates
+    requestAnimationFrame(() => {
+      this.menuToggle.setAttribute('aria-expanded', 'false');
+      
+      if (this.mobileNav) {
+        this.mobileNav.classList.remove(...this.classes.open);
+        this.mobileNav.classList.add(...this.classes.closed);
+      }
+      
+      this.isAnimating = false;
+    });
   }
 }
 
-// Mobile Search Component
+// Optimized Mobile Search Component
 class MobileSearch {
-  constructor() {
-    this.searchToggle = document.getElementById('mobile-search-toggle');
-    this.searchField = document.getElementById('mobile-search-field');
-    this.menuToggle = document.getElementById('mobile-menu-toggle');
+  constructor(cachedElements) {
+    this.searchToggle = cachedElements.mobileSearchToggle;
+    this.searchField = cachedElements.mobileSearchField;
+    this.menuToggle = cachedElements.mobileMenuToggle;
     this.isOpen = false;
+    this.searchInput = null;
     
-    if (this.searchToggle) {
-      this.bindEvents();
-    }
+    this.bindEvents();
   }
 
   bindEvents() {
-    this.searchToggle.addEventListener('click', () => {
+    this.searchToggle.addEventListener('click', (e) => {
+      e.preventDefault();
       this.toggle();
     });
 
-    // Close search when clicking outside
+    // Single optimized click listener
     document.addEventListener('click', (e) => {
-      if (this.isOpen && !this.searchToggle.contains(e.target) && !this.searchField?.contains(e.target)) {
+      if (!this.isOpen) return;
+      
+      const isClickInside = this.searchToggle.contains(e.target) || 
+                           this.searchField?.contains(e.target);
+      
+      if (!isClickInside) {
         this.close();
       }
     });
   }
 
   toggle() {
-    if (this.isOpen) {
-      this.close();
-    } else {
-      this.open();
-    }
+    this.isOpen ? this.close() : this.open();
   }
 
   open() {
+    if (this.isOpen) return;
+    
     this.isOpen = true;
-    this.searchField?.classList.remove('hidden');
-    // this.menuToggle?.classList.add('hidden');
     
-    // Close mobile menu if open
-    const mobileNav = document.getElementById('mobile-nav');
-    if (mobileNav && mobileNav.classList.contains('opacity-100')) {
-      const mobileMenu = window.modelArena?.mobileMenu;
-      if (mobileMenu) {
-        mobileMenu.close();
+    // Batch DOM updates
+    requestAnimationFrame(() => {
+      this.searchField?.classList.remove('hidden');
+      
+      // Close mobile menu efficiently
+      window.modelArena?.components?.mobileMenu?.close();
+      
+      // Cache and focus search input
+      if (!this.searchInput) {
+        this.searchInput = this.searchField?.querySelector('input[type="search"]');
       }
-    }
-    
-    // Focus the search input
-    const searchInput = this.searchField?.querySelector('input[type="search"]');
-    setTimeout(() => {
-      searchInput?.focus();
-    }, 100);
+      
+      // Use RAF for focus to avoid layout thrashing
+      requestAnimationFrame(() => {
+        this.searchInput?.focus();
+      });
+    });
   }
 
   close() {
+    if (!this.isOpen) return;
+    
     this.isOpen = false;
-    this.searchField?.classList.add('hidden');
-    this.menuToggle?.classList.remove('hidden');
+    
+    // Batch DOM updates
+    requestAnimationFrame(() => {
+      this.searchField?.classList.add('hidden');
+      this.menuToggle?.classList.remove('hidden');
+    });
   }
 }
 
-// Auth Modals Component
+// Optimized Auth Modals Component
 class AuthModals {
-  constructor() {
-    this.loginModal = document.getElementById('login-modal');
-    this.signupModal = document.getElementById('signup-modal');
-    this.loginForm = document.getElementById('login-form');
-    this.signupForm = document.getElementById('signup-form');
+  constructor(cachedElements) {
+    this.loginModal = cachedElements.loginModal;
+    this.signupModal = cachedElements.signupModal;
+    this.loginForm = null;
+    this.signupForm = null;
+    this.passwordToggles = new Map();
+    
+    // Cache modal elements
+    this.modalElements = new Map();
     
     this.bindEvents();
     this.setupPasswordToggles();
   }
 
   bindEvents() {
-    // Use event delegation to handle all auth buttons
+    // Single optimized click handler using event delegation
     document.addEventListener('click', (e) => {
       const target = e.target;
+      const targetId = target.id;
+      const buttonText = target.tagName === 'BUTTON' ? target.textContent.trim() : '';
       
-      // Check if clicked element is a button with login or register text
-      if (target.tagName === 'BUTTON') {
-        const buttonText = target.textContent.trim();
-        
-        if (buttonText === 'Log in') {
-          e.preventDefault();
-          this.openLogin();
-          return;
-        }
-        
-        if (buttonText === 'Register') {
-          e.preventDefault();
-          this.openSignup();
-          return;
-        }
+      // Handle auth buttons
+      if (buttonText === 'Log in') {
+        e.preventDefault();
+        this.openLogin();
+        return;
       }
-    });
-
-    // Modal close buttons
-    document.getElementById('login-modal-close')?.addEventListener('click', () => {
-      this.closeLogin();
-    });
-    
-    document.getElementById('signup-modal-close')?.addEventListener('click', () => {
-      this.closeSignup();
-    });
-
-    // Switch between modals
-    document.getElementById('open-signup-modal')?.addEventListener('click', () => {
-      this.closeLogin();
-      this.openSignup();
-    });
-    
-    document.getElementById('open-login-modal')?.addEventListener('click', () => {
-      this.closeSignup();
-      this.openLogin();
-    });
-
-    // Close modal when clicking backdrop
-    this.loginModal?.addEventListener('click', (e) => {
-      if (e.target === this.loginModal) {
+      
+      if (buttonText === 'Register') {
+        e.preventDefault();
+        this.openSignup();
+        return;
+      }
+      
+      // Handle modal controls
+      switch (targetId) {
+        case 'login-modal-close':
+          this.closeLogin();
+          break;
+        case 'signup-modal-close':
+          this.closeSignup();
+          break;
+        case 'open-signup-modal':
+          this.switchToSignup();
+          break;
+        case 'open-login-modal':
+          this.switchToLogin();
+          break;
+      }
+      
+      // Handle backdrop clicks
+      if (target === this.loginModal) {
         this.closeLogin();
-      }
-    });
-    
-    this.signupModal?.addEventListener('click', (e) => {
-      if (e.target === this.signupModal) {
+      } else if (target === this.signupModal) {
         this.closeSignup();
       }
     });
 
-    // Form submissions
-    this.loginForm?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this.handleLogin();
+    // Optimized form submission handlers
+    document.addEventListener('submit', (e) => {
+      const formId = e.target.id;
+      
+      if (formId === 'login-form') {
+        e.preventDefault();
+        this.handleLogin(e.target);
+      } else if (formId === 'signup-form') {
+        e.preventDefault();
+        this.handleSignup(e.target);
+      }
     });
-    
-    this.signupForm?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this.handleSignup();
-    });
+  }
+
+  switchToSignup() {
+    this.closeLogin();
+    requestAnimationFrame(() => this.openSignup());
+  }
+
+  switchToLogin() {
+    this.closeSignup();
+    requestAnimationFrame(() => this.openLogin());
   }
 
   setupPasswordToggles() {
@@ -417,37 +517,63 @@ class AuthModals {
   }
 
   openLogin() {
-    this.closeSignup(); // Close signup if open
-    this.loginModal?.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+    this.closeSignup();
     
-    // Focus first input
-    setTimeout(() => {
-      const firstInput = this.loginModal?.querySelector('input');
-      firstInput?.focus();
-    }, 100);
+    if (!this.loginModal) return;
+    
+    // Batch DOM updates
+    requestAnimationFrame(() => {
+      this.loginModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      
+      // Cache and focus first input
+      if (!this.modalElements.has('loginFirstInput')) {
+        this.modalElements.set('loginFirstInput', this.loginModal.querySelector('input'));
+      }
+      
+      requestAnimationFrame(() => {
+        this.modalElements.get('loginFirstInput')?.focus();
+      });
+    });
   }
 
   closeLogin() {
-    this.loginModal?.classList.add('hidden');
-    document.body.style.overflow = '';
+    if (!this.loginModal) return;
+    
+    requestAnimationFrame(() => {
+      this.loginModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
   }
 
   openSignup() {
-    this.closeLogin(); // Close login if open
-    this.signupModal?.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+    this.closeLogin();
     
-    // Focus first input
-    setTimeout(() => {
-      const firstInput = this.signupModal?.querySelector('input');
-      firstInput?.focus();
-    }, 100);
+    if (!this.signupModal) return;
+    
+    // Batch DOM updates
+    requestAnimationFrame(() => {
+      this.signupModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      
+      // Cache and focus first input
+      if (!this.modalElements.has('signupFirstInput')) {
+        this.modalElements.set('signupFirstInput', this.signupModal.querySelector('input'));
+      }
+      
+      requestAnimationFrame(() => {
+        this.modalElements.get('signupFirstInput')?.focus();
+      });
+    });
   }
 
   closeSignup() {
-    this.signupModal?.classList.add('hidden');
-    document.body.style.overflow = '';
+    if (!this.signupModal) return;
+    
+    requestAnimationFrame(() => {
+      this.signupModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
   }
 
   closeAll() {
@@ -455,44 +581,55 @@ class AuthModals {
     this.closeSignup();
   }
 
-  handleLogin() {
-    // Get form data
-    const formData = new FormData(this.loginForm);
+  handleLogin(form) {
+    // Get form data efficiently
+    const formData = new FormData(form);
     const loginData = {
-      email: formData.get('email'),
+      email: formData.get('email')?.trim(),
       password: formData.get('password'),
-      remember: formData.get('remember')
+      remember: Boolean(formData.get('remember'))
     };
+
+    // Basic validation
+    if (!loginData.email || !loginData.password) {
+      this.showError('Please fill in all required fields');
+      return;
+    }
 
     console.log('Login attempt:', loginData);
     
     // Here you would typically send the data to your backend
     // For now, just show a success message
-    alert('Login functionality would be implemented here');
+    this.showSuccess('Login functionality would be implemented here');
     
     // Close modal on successful login
     // this.closeLogin();
   }
 
-  handleSignup() {
-    // Get form data
-    const formData = new FormData(this.signupForm);
+  handleSignup(form) {
+    // Get form data efficiently
+    const formData = new FormData(form);
     const signupData = {
-      fullName: formData.get('fullName'),
-      email: formData.get('email'),
+      fullName: formData.get('fullName')?.trim(),
+      email: formData.get('email')?.trim(),
       password: formData.get('password'),
       confirmPassword: formData.get('confirmPassword'),
-      terms: formData.get('terms')
+      terms: Boolean(formData.get('terms'))
     };
 
-    // Basic validation
+    // Comprehensive validation
+    if (!signupData.fullName || !signupData.email || !signupData.password) {
+      this.showError('Please fill in all required fields');
+      return;
+    }
+
     if (signupData.password !== signupData.confirmPassword) {
-      alert('Passwords do not match');
+      this.showError('Passwords do not match');
       return;
     }
 
     if (!signupData.terms) {
-      alert('Please agree to the Terms & Conditions');
+      this.showError('Please agree to the Terms & Conditions');
       return;
     }
 
@@ -500,10 +637,22 @@ class AuthModals {
     
     // Here you would typically send the data to your backend
     // For now, just show a success message
-    alert('Signup functionality would be implemented here');
+    this.showSuccess('Signup functionality would be implemented here');
     
     // Close modal on successful signup
     // this.closeSignup();
+  }
+
+  showError(message) {
+    // Use modern notification instead of alert
+    console.error(message);
+    // Could implement toast notification here
+  }
+
+  showSuccess(message) {
+    // Use modern notification instead of alert
+    console.log(message);
+    // Could implement toast notification here
   }
 }
 
@@ -776,11 +925,23 @@ const utils = {
   }
 };
 
-// Initialize the application
-document.addEventListener('DOMContentLoaded', () => {
-  window.modelArena = new ModelArena();
-  new PerformanceMonitor();
-});
+// Optimized initialization
+(() => {
+  'use strict';
+  
+  // Initialize when DOM is ready or immediately if already loaded
+  const init = () => {
+    window.modelArena = new ModelArena();
+    new PerformanceMonitor();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    // DOM is already loaded, initialize immediately
+    requestAnimationFrame(init);
+  }
+})();
 
 // Service Worker registration for PWA capabilities (optional)
 if ('serviceWorker' in navigator) {

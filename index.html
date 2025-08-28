@@ -161,29 +161,29 @@
             <ul class="flex items-center gap-8.5">
               <li>
                 <a
-                  href="#"
-                  class="relative py-2 text-base font-normal text-secondary transition-colors hover:text-primary leading-none"
+                  href="/"
+                  class="relative py-2 text-base font-normal text-secondary transition-colors hover:text-primary leading-none active:text-primary"
                 >
-                  Popular
+                  Home
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#tags"
                   class="relative py-2 text-base font-normal text-secondary transition-colors hover:text-primary leading-none"
                   >Tags</a
                 >
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#new-models"
                   class="relative py-2 text-base font-normal text-secondary transition-colors hover:text-primary leading-none"
                   >New Models</a
                 >
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#recently-updated"
                   class="relative py-2 text-base font-normal text-secondary transition-colors hover:text-primary leading-none"
                   >Recently updated Models</a
                 >
@@ -254,28 +254,28 @@
                   <ul class="space-y-1">
                     <li class="mb-0">
                       <a
-                        href="#"
+                        href="#featured-models"
                         class="block px-5 py-2.5 text-[12px] font-normal text-light4 hover:bg-pink-hover transition-colors focus:bg-pink-hover"
                         >Home
                       </a>
                     </li>
                     <li>
                       <a
-                        href="#"
+                        href="#tags"
                         class="block px-5 py-2.5 text-[12px] font-normal text-light4 hover:bg-pink-hover transition-colors focus:bg-pink-hover"
                         >Tags</a
                       >
                     </li>
                     <li>
                       <a
-                        href="#"
+                        href="#new-models"
                         class="block px-5 py-2.5 text-[12px] font-normal text-light4 hover:bg-pink-hover transition-colors focus:bg-pink-hover"
                         >New Models</a
                       >
                     </li>
                     <li>
                       <a
-                        href="#"
+                        href="#recently-updated"
                         class="block px-5 py-2.5 text-[12px] font-normal text-light4 hover:bg-pink-hover transition-colors focus:bg-pink-hover"
                         >Recently updated Models</a
                       >
@@ -346,8 +346,9 @@
             <div class="flex justify-start">
               <div class="relative">
                 <!-- Featured Model Card -->
-                <div
-                  class="model-card bg-white rounded-3xl shadow-card-shadow-pink overflow-hidden transition-all duration-300 hover:shadow-card-shadow-pink-hover cursor-pointer"
+                <a
+                  href="/model-profile.html"
+                  class="block model-card bg-white rounded-3xl shadow-card-shadow-pink overflow-hidden transition-all duration-300 hover:shadow-card-shadow-pink-hover cursor-pointer"
                 >
                   <div class="relative overflow-hidden">
                     <img
@@ -423,7 +424,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
             <!-- Text -->
@@ -443,6 +444,7 @@
 
       <!-- Featured Models Section -->
       <section
+        id="featured-models"
         class="mb-0 lg:mb-0 bg-white lg:py-15 py-10 rounded-t-4xl rounded-tr-4xl shadow-card-shadow-grey"
       >
         <div class="container mx-auto max-w-screen-xl">
@@ -451,7 +453,8 @@
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-3 lg:gap-x-4 lg:gap-y-6 gap-y-5"
           >
             <!-- Model Card 1 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -501,11 +504,12 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 2 -->
-            <div
-              class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
+            <a
+              href="/model-profile.html"
+              class="model-card bg-white rounded-2xl overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
                 <img
@@ -554,10 +558,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 3 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -607,10 +612,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 4 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -660,10 +666,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 5 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -713,10 +720,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 6 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -766,13 +774,16 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>
 
       <!-- New Models Section -->
-      <section class="bg-white lg:pt-16 md:pt-4 pt-12 lg:pb-16 md:pb-12 pb-8">
+      <section
+        id="new-models"
+        class="bg-white scroll-m-18 lg:pt-16 md:pt-4 pt-12 lg:pb-16 md:pb-12 pb-8"
+      >
         <div class="container mx-auto max-w-screen-xl">
           <h2 class="section-title">New Models</h2>
           <div
@@ -780,7 +791,8 @@
           >
             <!-- Model Card 1 -->
 
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -830,10 +842,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 2 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -883,10 +896,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 3 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -936,10 +950,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 4 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -989,11 +1004,12 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 5 -->
 
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -1043,9 +1059,10 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
             <!-- Model Card 6 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -1095,14 +1112,15 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>
 
       <!-- Recently Updated Section -->
       <section
-        class="mb-16 lg:mb-20 bg-white lg:pt-16 md:pt-4 pt-12 lg:pb-16 md:pb-12 pb-8 shadow-card-shadow-grey-bottom rounded-b-4xl"
+        id="recently-updated"
+        class="mb-16 lg:mb-20 scroll-m-18 bg-white lg:pt-16 md:pt-4 pt-12 lg:pb-16 md:pb-12 pb-8 shadow-card-shadow-grey-bottom rounded-b-4xl"
       >
         <div class="container mx-auto max-w-screen-xl">
           <h2 class="section-title">Recently Updated</h2>
@@ -1110,7 +1128,8 @@
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-3 lg:gap-x-4 lg:gap-y-6 gap-y-5"
           >
             <!-- Model Card 1 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -1160,10 +1179,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 2 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -1213,10 +1233,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 3 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -1266,10 +1287,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 4 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -1319,10 +1341,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 5 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -1372,10 +1395,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <!-- Model Card 6 -->
-            <div
+            <a
+              href="/model-profile.html"
               class="model-card bg-white rounded-2xl s overflow-hidden transition-all duration-300 shadow-card-shadow-grey-card cursor-pointer"
             >
               <div class="relative overflow-hidden">
@@ -1425,13 +1449,13 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>
 
-      <!-- Categories Section -->
-      <section class="mb-16 lg:mb-20">
+      <!-- Tags Section -->
+      <section class="mb-16 scroll-m-10  lg:mb-20" id="tags">
         <div class="container mx-auto max-w-screen-xl">
           <h2 class="section-title !mb-8">Categories</h2>
           <div class="flex flex-wrap gap-y-4 gap-x-2 mb-4 max-w-4xl">
@@ -1649,11 +1673,11 @@
       class="fixed inset-0 bg-black/15 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden"
     >
       <div
-        class="bg-white rounded-3xl shadow-card-shadow-pink max-w-[596px] w-full max-h-[90vh] overflow-y-auto relative"
+        class="bg-white rounded-3xl shadow-card-shadow-pink max-w-[596px] w-full max-h-[90vh] overflow-y-auto relative theme-scrollbar"
       >
         <!-- Close Button -->
         <button
-          class="absolute  top-4 cursor-pointer right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
+          class="absolute top-4 cursor-pointer right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
           id="login-modal-close"
         >
           <svg
@@ -1806,7 +1830,7 @@
       class="fixed inset-0 bg-black/15 bg-opacity-75 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden"
     >
       <div
-        class="bg-white rounded-3xl shadow-card-shadow-pink max-w-[596px] w-full max-h-[90vh] overflow-y-auto relative"
+        class="bg-white rounded-3xl shadow-card-shadow-pink max-w-[596px] w-full max-h-[90vh] overflow-y-auto relative theme-scrollbar"
       >
         <!-- Close Button -->
         <button
