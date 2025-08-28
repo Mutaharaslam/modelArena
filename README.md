@@ -67,6 +67,57 @@ modelArena/
 
 ## 🎨 Design System
 
+### Scrollbar System
+
+The project includes an optimized, modular scrollbar system with multiple options:
+
+#### Available Classes:
+
+**Thin Scrollbars (4px width):**
+- `.scrollbar-thin` - **Default** thin scrollbar with **grey track** and **pink thumb**
+- `.scrollbar-thin-track` - Same as `scrollbar-thin` (for consistency)
+- `.scrollbar-no-track` - Thin scrollbar with **no visible track**
+
+**Medium Scrollbars (6px width):**
+- `.scrollbar-medium` - Medium scrollbar with **no visible track**
+- `.scrollbar-medium-track` - Medium scrollbar with **visible track**
+
+**Legacy Support:**
+- `.theme-scrollbar` - Backward compatibility (same as `scrollbar-thin`)
+
+#### Usage Examples:
+
+```html
+<!-- Description with default scrollbar (grey track + pink thumb) -->
+<div class="max-h-[250px] overflow-y-auto scrollbar-thin">
+  <!-- Content -->
+</div>
+
+<!-- Modal with default scrollbar -->
+<div class="max-h-[90vh] overflow-y-auto scrollbar-thin">
+  <!-- Modal content -->
+</div>
+
+<!-- Special case: scrollbar without track -->
+<div class="overflow-y-auto scrollbar-no-track">
+  <!-- Content -->
+</div>
+
+<!-- Content area with medium scrollbar -->
+<div class="overflow-y-auto scrollbar-medium">
+  <!-- Content -->
+</div>
+```
+
+#### Features:
+- ✅ **Cross-browser support** (Webkit + Firefox)
+- ✅ **Smooth hover animations** with scale effects
+- ✅ **Solid pink thumb** with brand colors (#ee46bc)
+- ✅ **Grey track** for better visual feedback
+- ✅ **Flexible track visibility** options
+- ✅ **Optimized performance** with minimal CSS
+- ✅ **Backward compatibility** with existing code
+
 ### Breakpoints
 
 - **Mobile**: 390px (sm)
